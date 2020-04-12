@@ -6,11 +6,11 @@ pipeline {
     }
   }
   environment {
-//    CI = 'false'
+   CI = 'false'
     npm_config_cache = 'npm-cache'
-  HOME = '.'
+//  HOME = '.'
  //  npm_config_cache = 'npm-cache'
-  }
+ }
   //tools { 
     //    git 'masterGit'
   //}
