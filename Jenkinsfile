@@ -8,7 +8,7 @@ pipeline {
   environment {
     CI = 'false'
 //.   HOME = '.'
-   npm_config_cache = 'npm-cache'
+ //  npm_config_cache = 'npm-cache'
   }
   tools { 
         git 'masterGit'
