@@ -11,9 +11,9 @@ pipeline {
 //  HOME = '.'
  //  npm_config_cache = 'npm-cache'
  }
-  //tools { 
-    //    git 'masterGit'
-  //}
+  tools { 
+        git 'masterGit'
+  }
   stages {
     stage('Install Packages') {
       steps {
