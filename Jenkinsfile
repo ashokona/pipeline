@@ -1,20 +1,38 @@
 pipeline {
-  agent {
-    docker {
-      image 'node:12-alpine'
-      args '-p 20001-20100:3000'
-    }
-  }
+  agent 
+  //{
+    //docker {
+      //image 'node:12-alpine'
+      //args '-p 20001-20100:3000'
+   // }
+ // }
   environment {
    CI = 'false'
     npm_config_cache = 'npm-cache'
  HOME = '.'
  //  npm_config_cache = 'npm-cache'
  }
-  tools { 
-        git 'masterGit'
-  }
+  //tools { 
+    //    git 'masterGit'
+  //}
   stages {
+        stage('node') {
+            agent {
+                docker { image 'alpine/git' }
+            }
+            steps {
+                sh 'git --version'
+            }
+        }
+        stage('git') {
+            agent {
+                docker { image 'node:12-alpine' }
+            }
+            steps {
+                sh 'node --version'
+            }
+        }
+    
     stage('Install Packages') {
       steps {
         sh 'git --version'
