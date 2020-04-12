@@ -8,7 +8,7 @@ pipeline {
   environment {
    CI = 'false'
     npm_config_cache = 'npm-cache'
-//  HOME = '.'
+ HOME = '.'
  //  npm_config_cache = 'npm-cache'
  }
   tools { 
@@ -17,7 +17,7 @@ pipeline {
   stages {
     stage('Install Packages') {
       steps {
-        // // sh 'git --version'
+        sh 'git --version'
         // sh 'node -v'
         // sh 'npm -v'
         sh 'npm install'
