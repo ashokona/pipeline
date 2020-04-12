@@ -5,14 +5,14 @@ pipeline {
       args '-p 20001-20100:3000'
     }
   }
-  environment {
-    CI = 'false'
-    HOME = '.'
-    npm_config_cache = 'npm-cache'
-  }
-  tools { 
-        git 'masterGit'
-  }
+//  environment {
+//    CI = 'false'
+//    HOME = '.'
+//    npm_config_cache = 'npm-cache'
+//  }
+//  tools { 
+//        git 'masterGit'
+//  }
   stages {
     stage('Install Packages') {
       steps {
