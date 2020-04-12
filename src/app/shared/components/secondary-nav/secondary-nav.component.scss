@@ -1,0 +1,52 @@
+@import '../../../../variables.scss';
+
+.secondary-nav-bar {
+  background: #266A81;
+  color:$cops-dull;
+  .mat-toolbar-row,
+  .mat-toolbar-single-row {
+    height: 48px;
+    padding: 0 $content-padding;
+  }
+  .top-nav-spacer {
+    flex: 1 1 auto;
+  }
+  .mat-toolbar-multiple-rows {
+    min-height: 48px;
+  }
+}
+
+.mat-toolbar-multiple-rows {
+  min-height: 48px;
+}
+
+.secondary-nav-item{
+  margin-left:6px;
+  text-transform: uppercase;
+}
+
+.sec-nav-items{
+  font-size: 16px;
+  justify-content: center;
+  padding: 10px 12px;
+  color:$cops-primary-light;
+  // color:$cops-dull;
+  cursor: pointer;
+    // border-bottom: 4px solid white;
+}
+
+a.sec-nav-items.active{
+    color:$cops-light;
+    border-bottom: 4px solid $cops-light;
+}
+
+a.sec-nav-items:hover{
+  color:$cops-light;
+  // border-bottom: 4px solid white;
+}
+
+.secondary-nav-bar{
+  background: #266A81;
+  color:$cops-dull;
+}
+

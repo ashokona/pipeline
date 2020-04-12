@@ -1,0 +1,8 @@
+<cops-secondary-nav [navItems]="secNavTabs" [title]="module" (navItemChanged)="onNavItemChanged($event)"></cops-secondary-nav>
+<!-- <div class="settings-container" [ngClass]="{'hide': settingsModel.gridLoading}">
+  <router-outlet></router-outlet>
+</div> -->
+<div class="settings-container">
+  <router-outlet></router-outlet>
+</div>
+<!-- <mat-spinner *ngIf="settingsModel.gridLoading" class="spinner-custom"></mat-spinner> -->

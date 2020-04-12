@@ -1,0 +1,29 @@
+@import '../../../../../../variables';
+
+.create-schedule-container {
+  height: 100%;
+}
+
+.mat-button-toggle-checked {
+  background-color: red;
+}
+
+.green-button {
+  background-color: green;
+}
+
+// button:disabled,
+// button[disabled]{
+//   border: 1px solid #999999;
+//   background-color: #cccccc;
+//   color: #666666;
+// }
+
+.mat-dialog-container {
+  // padding: 0px;
+  overflow: none;
+  height: 100%;
+  .create-schedule-form {
+    height: 100%
+  }
+}

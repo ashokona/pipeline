@@ -1,0 +1,36 @@
+<div fxLayout="column" fxLayoutGap="20px">
+  <div fxFlex>
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <span fxFlex>
+        <span class="heading-primary">Unused Resources - ${{ totalPrice }}</span>
+      </span>
+      <span fxFlex fxLayoutAlign="end center" >
+        <mat-button-toggle-group class="mat-button-round" appearance="legacy" [(ngModel)]="selectedResorceType" (ngModelChange)="onResourceToggle(selectedResorceType)" name="fontStyle" aria-label="Font Style">
+          <!-- <mat-button-toggle value="All">All ({{ totalCount }})</mat-button-toggle>
+          <mat-button-toggle value="Volumes">Volumes ({{ unusedResources?.Volumes.length }})</mat-button-toggle>
+          <mat-button-toggle value="Elbs">ELB ({{ unusedResources?.Elbs.length }})</mat-button-toggle>
+          <mat-button-toggle value="Eips">EIP ({{ unusedResources?.Eips.length }})</mat-button-toggle> -->
+          <mat-button-toggle value="all">All ({{ resources?.length }})</mat-button-toggle>
+          <mat-button-toggle value="gp2">Volumes ({{ volumes?.length }})</mat-button-toggle>
+          <!-- <mat-button-toggle value="elb">ELB ({{ elbs?.length }})</mat-button-toggle>
+          <mat-button-toggle value="eip">EIP ({{ eips?.length }})</mat-button-toggle> -->
+        </mat-button-toggle-group>
+      </span>
+    </div>
+  </div>
+  <div fxFlex>
+    <cops-data-table
+      (refreshClicked)="onRefreshVolumes()"
+      (deleteClicked)="onDelteData($event)"
+      [options]="tableOptions" [data]="unusedResources" [columns]="displayedColumns">
+    </cops-data-table>
+  </div>
+  <ng-template #emptyState>
+      <div class="full-height" fxLayout="column" fxLayoutAlign="center center">
+        <i class="material-icons md-48 gray">
+          inbox
+        </i>
+        <p class="light-gray">No data found</p>
+      </div>
+    </ng-template>
+</div>

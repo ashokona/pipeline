@@ -1,0 +1,36 @@
+@import '../../../../variables.scss';
+
+.restricted-access {
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  cursor: not-allowed;
+  // background: rgba(20, 0, 107, 0.1);
+  // color: rgba(0,80,107,0.5);
+  border-radius: $border-radius;
+  // opacity: 1;
+}
+
+.restricted-text {
+  cursor: context-menu;  
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+  padding: $content-padding-small;
+}
+
+.cloud-view {
+  cursor: pointer;
+  text-decoration: underline;
+  font-style: italic;
+  padding: $content-padding-small;
+  color: #a94442;
+}
+
+.padding-small {
+  padding: $content-padding-small;
+}

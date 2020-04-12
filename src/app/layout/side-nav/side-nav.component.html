@@ -1,0 +1,18 @@
+<div fxLayout="column" disabled style="height:100%" >
+  <button mat-icon-button class="menu-btn" (click)="toggleSideNavMenu()">
+    <mat-icon *ngIf="!isExpanded" aria-label=""><i class="material-icons">menu</i></mat-icon>
+    <mat-icon *ngIf="isExpanded" aria-label=""><i class="material-icons">close</i></mat-icon>
+  </button>
+  <!-- <mat-icon *ngIf="!isExpanded" aria-label=""><i class="material-icons">menu</i></mat-icon> -->
+  
+  <mat-nav-list *ngIf="navItems.length > 0">
+    <cops-menu-list-item *ngFor="let item of navItems" [item]="item"></cops-menu-list-item>
+  </mat-nav-list>
+</div>
+<div class="side-nav-overlay" *ngIf="!currentUser?.isConfigured"></div>
+<!-- <mat-menu #menu="matMenu" xPosition="after" yPosition="below" overlapTrigger="false">
+  <button mat-menu-item (click)="onSignout()">
+    <mat-icon>power_settings_new</mat-icon>
+    <span>SignOut</span>
+  </button>
+</mat-menu> -->

@@ -1,0 +1,42 @@
+@import '~@angular/material/theming';
+@import './custom-colors.scss';
+
+@include mat-core();
+
+
+$primary : mat-palette($cops-blue,900);
+$accent : mat-palette($mat-amber, A200, A100, A400);
+$warn : mat-palette($mat-red,500);
+$success : mat-palette($mat-green,500);
+$alert : mat-palette($mat-amber,500);
+
+
+$cops-app-primary: mat-palette($cops-blue,900);
+$cops-app-accent:  mat-palette($mat-amber, A200, A100, A400);
+
+$cops-app-warn:    mat-palette($mat-red,500);
+
+$cops-app-theme: mat-light-theme($cops-app-primary, $cops-app-accent, $cops-app-warn);
+
+@include angular-material-theme($cops-app-theme);
+
+
+// Define an alternate dark theme.
+$dark-primary: mat-palette($cops-blue,900);
+$dark-accent:  mat-palette($mat-amber, A200, A100, A400);
+$dark-warn:    mat-palette($mat-red,500);
+$dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+
+.cops-dark-theme {
+  @include angular-material-theme($dark-theme);
+}
+
+$cost-primary: mat-palette($cops-cost,900);
+$cost-accent:  mat-palette($cops-cost,500);
+$cost-warn:    mat-palette($mat-red,500);
+$cost-theme:   mat-light-theme($cost-primary, $cost-accent, $dark-warn);
+
+.cops-cost-theme {
+  @include angular-material-theme($cost-theme);
+}
+

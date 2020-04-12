@@ -1,0 +1,41 @@
+<mat-toolbar class="mat-elevation-z0 secondary-nav-bar" color=""  fxLayout="row" fxLayoutAlign="space-between center">
+    <span class="fs-18 bold">HOME</span>
+    <span>
+      <i class="material-icons md-24 link" matTooltip="Download Presentation" (click)="onDownload()">
+        get_app
+      </i>
+    </span>
+</mat-toolbar>
+<div copsRestrictedAccess class="container" id="container">
+  <div fxLayout="column" fxLayoutGap="20px">
+    <div fxFlex>
+      <cops-summary></cops-summary>
+    </div>
+    <div fxFlex>
+      <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="20px">
+        <div fxFlex="55">
+          <cops-cost></cops-cost>
+        </div>
+        <div fxFlex="45">
+          <cops-security></cops-security>
+        </div>
+      </div>
+    </div>
+    <div fxFlex>
+      <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="20px">
+        <div fxFlex="45">
+          <cops-compliance></cops-compliance>
+        </div>
+        <div fxFlex="55">
+          <cops-inventory></cops-inventory>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="download-indicator" *ngIf="showDownloadLocation">
+  <button mat-fab color="primary"> <i class="material-icons md-36">
+      arrow_downward
+    </i></button>
+</div>

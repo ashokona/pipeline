@@ -1,0 +1,25 @@
+<mat-card>
+  <mat-card-title>
+      <button mat-button color="primary" (click)="onGoBack()" >Go Back</button>
+  </mat-card-title>
+  <mat-card-content>
+      <div fxLayout="row wrap" *ngIf="rowData">
+          <ng-container *ngFor="let col of getColumnDetails(rowData); let i = index">
+            <div fxFlex="50%" class="details-row" >
+              <div fxLayout="row" fxFill fxLayoutAlign="center">
+                <div fxFlex="30%" class="column">
+                  <span>{{col}}</span> :
+                </div>
+                <div fxFlex="70%" style="overflow: hidden">
+                  <span>{{rowData[col]}}</span>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+          <ng-container  *ngIf="getColumnDetails(rowData).length % 2 != 0">
+            <div fxFlex="50%" class="details-row"></div>
+          </ng-container>
+        </div>
+  </mat-card-content>
+
+</mat-card>

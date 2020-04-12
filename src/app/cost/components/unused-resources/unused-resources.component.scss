@@ -1,0 +1,19 @@
+@import '../../../../variables';
+
+.mat-button-toggle-group, .mat-button-toggle-standalone{
+  border-radius:$border-radius;
+  background: $cops-light;
+  color:$cops-primary;
+  .mat-button-toggle{
+    color:$cops-primary;
+  }
+  .mat-button-toggle:not(:last-child){
+    border-right:1px solid $cops-dull;
+  }
+  .mat-button-toggle-checked{
+    background:$cops-primary;
+    color:$cops-light;
+  }
+}
+
+// :not(:last-child)

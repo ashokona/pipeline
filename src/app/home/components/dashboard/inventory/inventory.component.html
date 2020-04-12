@@ -1,0 +1,20 @@
+<mat-card class="dashcard-card-primary" fxLayoutAlign="center none" fxLayout="column">
+  <ng-container>
+      <mat-card-title fxLayout="row" fxFlex="15" class="content-padding bg-primary link"routerLink="/inventory">
+          <span fxFlex class="fs-20 bold">RESOURCES DISCOVERED</span>
+          <span fxFlex dir="rtl">
+              <i class="material-icons md-18 light link" routerLink="/inventory">pageview</i>
+          </span>
+        </mat-card-title>
+        <mat-card-content *copsContentState="loadingState" fxFlex="85">
+          <div fxLayout="row" fxFill>
+            <div fxFlex="50%" fxFill *ngIf="inventoryBarElementId">
+                <cops-google-chart [data]="inventoryBarChartData" [config]="inventoryBarChartConfig" [elementId]="inventoryBarElementId" [chartType]="'column'"></cops-google-chart>
+            </div>
+            <div fxFlex="50%" fxFill *ngIf="!isLoading && inventoryPieElementId">
+                <cops-google-chart [data]="inventoryPieChartData" [config]="inventoryPieChartConfig" [elementId]="inventoryPieElementId" [chartType]="'pie'"></cops-google-chart>
+            </div>
+          </div>
+        </mat-card-content>
+  </ng-container>
+</mat-card>

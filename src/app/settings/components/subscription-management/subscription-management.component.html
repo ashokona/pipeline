@@ -1,0 +1,14 @@
+<div fxLayout="column" fxLayoutGap="20px">
+  <div fxLayout="row" fxLayoutAlign="space-between center" >
+    <span class="heading-primary">Subscription</span>
+  </div>
+  <div>
+    <cops-data-table
+      (refreshClicked)="getSubscriptionData()"
+      (editClicked)="onEditSubscription($event)"
+      [options]="tableOptions" [data]="tableData" [columns]="displayedColumns">
+    </cops-data-table>
+  </div>
+</div>
+<cops-edit-subscription *ngIf="editSubscription" [subscription]="subscription"
+ (updateTable)="updateTable($event)" (cancelClicked)="onCancelEdit()"></cops-edit-subscription>

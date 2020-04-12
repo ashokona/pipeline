@@ -1,0 +1,24 @@
+<!-- <mat-card class="verify-card">
+  <mat-card-content fxLayout="column" fxLayoutAlign="center center">
+    <ng-container *ngIf="isLoading">
+      <span>
+        <mat-spinner></mat-spinner>
+      </span>
+      <h2>Verifying email...</h2>
+    </ng-container>
+    <ng-container *ngIf="!isLoading && isVerified">
+      <i class="material-icons md-48 success">check_circle_outline</i>
+      <h2>{{responseMessage}}</h2>
+      <p>Continue to </p>
+      <button mat-flat-button color="primary" type="submit" routerLink="/auth/signin">SignIn</button>
+    </ng-container>
+    <ng-container *ngIf="!isLoading && !isVerified">
+      <i class="material-icons md-48 warn">error_outline</i>
+      <h2>{{responseMessage}}</h2>
+      <p>Request for new link</p>
+      <button mat-flat-button color="primary" type="submit">Verify Email</button>
+    </ng-container>
+  </mat-card-content>
+</mat-card> -->
+<cops-full-page-notification [loading]="isLoading" [icon]="notiIcon" [type]="notiType"
+  [title]="notiTitle" [description]="notiDescription" [action]="notiAction" (actionClicked)="onActionClicked($event)"></cops-full-page-notification>

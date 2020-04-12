@@ -1,0 +1,15 @@
+<div class="container" >
+    <mat-card class="mat-card-risk-bordered">
+        <mat-card-title fxLayout="column">
+           <span class="fs-18 primary bold">CALENDAR</span> 
+        </mat-card-title>
+        <mat-card-content>
+            <full-calendar
+            defaultView="dayGridMonth"
+            [plugins]="calendarPlugins"
+            [weekends]="true"
+            [events]="calendarEvents"
+            ></full-calendar>
+        </mat-card-content>
+    </mat-card>
+</div>

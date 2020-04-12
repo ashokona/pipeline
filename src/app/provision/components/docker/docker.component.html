@@ -1,0 +1,272 @@
+<div class="container">
+
+  <mat-horizontal-stepper [linear]="isLinear" #stepper>
+    <mat-step [stepControl]="regionFormGroup">
+      <form fxLayout="column" fxLayoutGap="16px" [formGroup]="regionFormGroup">
+        <div>
+          <ng-template matStepLabel>Region</ng-template>
+        </div>
+        <div>
+          <mat-form-field fxFlex="25%">
+            <mat-select placeholder ="Select Region" formControlName="selectedRegion" >
+              <mat-option *ngFor="let region of awsRegions" [value]="region">
+                  {{region}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxLayoutAlign="end center">
+          <button mat-raised-button color="primary" (click)="onRegionSelect()" matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="actionSelectFormGroup">
+      <form [formGroup]="actionSelectFormGroup" fxLayout="column" fxLayoutGap="16px">
+        <div>
+          <ng-template matStepLabel>{{ regionFormGroup.value.selectedRegion }} Selected</ng-template>
+        </div>
+
+          <mat-radio-group formControlName="select" required fxLayout="row wrap" fxLayoutGap="16px grid">
+            <mat-radio-button fxFlex value="create">Create</mat-radio-button>
+            <mat-radio-button fxFlex value="modify">Modify</mat-radio-button>
+          </mat-radio-group> 
+
+        <div fxLayout="row wrap" fxLayoutGap="16px grid">
+          <ng-container *ngIf="actionSelectFormGroup.value.select === 'modify'">
+            <mat-form-field fxFlex="50%">
+            <input matInput placeholder="Select Instance" matInput formControlName="selectinstance" [matAutocomplete]="au">
+              <mat-autocomplete #au="matAutocomplete">
+                  <mat-option *ngFor="let option of selectinstance" [value]="option">
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+          </ng-container>
+        </div>
+
+        <div fxLayout="row">
+          <div fxFlex fxLayoutAlign="end center">
+            <button mat-stroked-button color="primary" matStepperPrevious>Back</button>
+            <button mat-raised-button color="primary" (click)="actionSelect()" matStepperNext>Next</button>
+          </div>
+          <!-- <div fxFlex fxLayoutAlign="end" fxLayoutGap="16px">
+            <button mat-raised-button color="primary" matStepperNext (click)="onServiceProvider('aws')">AWS</button>
+            <button mat-raised-button color="primary" matStepperNext (click)="onServiceProvider('azure')">AZURE</button>
+          </div> -->
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="clusterConfigurationFormGroup">
+      <form [formGroup]="clusterConfigurationFormGroup" fxLayout="column" fxLayoutGap="16px">
+        <div>
+          <ng-template matStepLabel>{{ actionSelectFormGroup.value.select }} Cluster Configuration</ng-template>
+        </div>
+
+        <div fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="16px grid">
+            <mat-form-field fxFlex="25">
+              <mat-select placeholder="Manager Instance Type" formControlName="manager_instanceType" required>
+              </mat-select>
+            </mat-form-field>
+            
+            <mat-form-field fxFlex="25%">
+              <mat-select placeholder="No. of Managers" formControlName="noOfManagers" required>
+              </mat-select>
+  
+            </mat-form-field>
+  
+            <mat-form-field fxFlex="25%">
+              <input matInput placeholder="AMI" matInput formControlName="ami" [matAutocomplete]="au">
+              <mat-autocomplete #au="matAutocomplete">
+                  <mat-option *ngFor="let option of ami" [value]="option">
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            
+            <mat-form-field fxFlex="25%">
+              <input matInput placeholder="Volumes" formControlName="volumes" required>
+            </mat-form-field>
+  
+            <mat-form-field fxFlex="25%">
+                <input placeholder="Key Pair" matInput formControlName="key_pair" [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of key_pair" [value]="option">
+                      {{option}}
+                    </mat-option>
+                  </mat-autocomplete>
+            </mat-form-field>
+  
+            <mat-form-field fxFlex="25%">
+              <mat-select placeholder="Worker Instance Type" formControlName="worker_instanceType" required></mat-select>
+            </mat-form-field>
+  
+            <mat-form-field fxFlex="25%">
+              <!-- <input matInput placeholder="Environment" formControlName="environment" required> -->
+              <mat-select placeholder="No. of Workers" formControlName="noOfWorkers" required>
+              </mat-select>
+            </mat-form-field>
+          </div>
+            <div fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="16px grid">
+                <h4 class="bold primary">Tags</h4>
+                <i class="material-icons" (click)="addItem()" title="Add More" >add_circle_outline</i>
+              <table class="example-full-width" cellspacing="0">
+                <div formArrayName="tags_name" *ngFor="let tags_name of clusterConfigurationFormGroup.get('tags_name')?.controls; let i = index;">
+                  <div [formGroupName]="i">
+                    <!-- <input formControlName="name" placeholder="tag name">
+                    <input formControlName="value" placeholder="tag value"> -->
+                      <tr>
+                        <td><mat-form-field class="example-full-width">
+                          <input matInput placeholder="tag name" formControlName="name" required>
+                        </mat-form-field></td>
+                        <td><mat-form-field class="example-full-width">
+                          <input matInput placeholder="Tag value" formControlName="value" required>
+                        </mat-form-field></td>
+                      </tr>
+                  </div>
+                  <!-- Chosen name: {{ genericConfigurationFormGroup.controls.tags_name.controls[i].controls.name.value }} -->
+                </div>
+              </table>
+            </div>
+        </form>
+        <mat-card-actions align="end">
+          <button mat-raised-button color="primary" [disabled]="!this.clusterConfigurationFormGroup.valid" (click)="onSubmit()">Add to stack</button>
+        </mat-card-actions>
+      <mat-card class="mat-card-primay-tb">
+        <h4 class="bold primary">My Stack</h4>
+        <mat-card-content>
+            <table class="example-full-width" border="1px" cellspacing="0" style="width:100%;" ng-controller="demoCtrl">
+                <th>manager_instanceType</th>
+                <th>noOfManagers</th>
+                <th>ami</th>
+                <th>volumes</th>
+                <th>key_pair</th>
+                <th>worker_instanceType</th>
+                <th>noOfWorkers</th>
+                <th>tags_name</th>
+  
+                <tr *ngFor="let stack of myStack; let i = index">
+                  <td>{{stack.manager_instanceType}}</td>
+                  <td>{{stack.noOfManagers}}</td>
+                  <td>{{stack.ami}}</td>
+                  <td>{{stack.volumes}}</td>
+                  <td>{{stack.key_pair}}</td>
+                  <td>{{stack.worker_instanceType}}</td>
+                  <td>{{stack.noOfWorkers}}</td>
+                  <td>{{stack.tags_name}}</td>
+                </tr> 
+              </table>
+        </mat-card-content>
+      </mat-card>
+      <mat-card-actions align="end">
+        <button mat-button class="primary">Reset</button>
+        <button mat-raised-button color="primary" [disabled]="!this.clusterConfigurationFormGroup.valid" >Submit</button>
+      </mat-card-actions>
+  <script type="text/ng-template" id="form1.tpl.html">
+    <label>
+      Form one is an input: <input type="text" />
+    </label>
+  </script>
+ 
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      You are now done.
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>
+
+<!-- <div class="container">
+  <div fxLayout="column" fxLayoutGap="16px">
+    <div fxFlex>
+      <div fxLayout="row" fxFill>
+        <div fxFlex fxLayoutAlign="start center">
+          <span class="fs-18">CONFIGURATION</span>
+        </div>
+        <div fxFlex fxLayoutAlign="end center">
+          <button mat-raised-button color="primary">Get Quotation</button>
+        </div>
+      </div>
+    </div>
+    <div fxFlex>
+      <mat-card class="mat-card-top-bordered">
+
+        <mat-card-content fxLayout="column">
+          <div fxLayout="row" fxLayoutGap="16px">
+            <mat-form-field fxFlex="25">
+              <input matInput placeholder="Nuber of CPU Cores" type="number">
+
+            </mat-form-field>
+            <mat-form-field fxFlex="25">
+              <mat-select placeholder="Select OS">
+                <mat-option *ngFor="let food of foods" [value]="food.value">
+                  {{food.viewValue}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field fxFlex="25">
+              <input matInput placeholder="Memory" type="number">
+              <span matSuffix class="primary">GB</span>
+            </mat-form-field>
+            <mat-form-field fxFlex="25">
+              <input matInput placeholder="Storage" type="number">
+
+              <span matSuffix class="primary">GB</span>
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div fxFlex fxLayout="row" fxLayoutGap="16px">
+      <mat-card fxFlex="50" fxLayout="row" fxLayoutGap="16px" class="cloud-service-card">
+        <span fxFlex="50" fxLayoutAlign="center center">
+          <img src="../../../../../../assets/img/aws.png" height="60%" width="80%">
+        </span>
+        <span fxFlex="50" fxLayoutAlign="center center">
+          <span class="fs-32 primary">$ 3235</span>
+        </span>
+      </mat-card>
+      <mat-card fxFlex="50" fxLayout="row" fxLayoutGap="16px" class="cloud-service-card">
+        <span fxFlex="50" fxLayoutAlign="center center">
+          <img src="../../../../../../assets/img/azure.png" height="60%" width="80%">
+        </span>
+        <span fxFlex="50" fxLayoutAlign="center center">
+            <span class="fs-32 primary">$ 3235</span>
+        </span>
+      </mat-card>
+    </div>
+  </div>
+</div> -->
+
+
+<!-- <div class="container" ng-app="myApp" ng-controller="myController">
+  <h4 class="bold primary">CONFIGURATION</h4>
+  <mat-card class="mat-card-primay-tb">
+    
+    <mat-card-content>
+      <form [formGroup]="genericConfigurationFormGroup" id="AWSSerializedDetails" fxLayout="column" fxLayoutGap="16px">
+        <div fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="16px grid">
+          
+          
+          <mat-hint align="start" class="bold primary">DOCKER</mat-hint>
+          <br>
+          <mat-radio-group formControlName="accessType" required fxLayout="row wrap" fxLayoutGap="10px grid">
+          <mat-radio-button fxFlex value="create">Create</mat-radio-button>
+          <mat-radio-button fxFlex value="modify">Modify</mat-radio-button>
+        </mat-radio-group>
+
+
+        </div>
+        <div fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="16px grid">
+          <h4 class="bold primary">CLUSTER CONFIGURATION</h4>
+        </div>
+         -->

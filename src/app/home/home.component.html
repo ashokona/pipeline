@@ -1,0 +1,13 @@
+<mat-sidenav-container autosize [hasBackdrop]="isExpanded" (backdropClick)="toggleSideNav()">
+  <cops-top-nav (click)="isExpanded ? toggleSideNav() : null"></cops-top-nav>
+
+  <mat-sidenav class="mat-elevation-z0" #sidenav disableClose [fixedInViewport]="true" fixedTopGap="0" class="sidenav"
+    mode="over" opened="true">
+    <cops-side-nav></cops-side-nav>
+  </mat-sidenav>
+  <!-- <mat-sidenav opened mode="over" position="end">layout from left</mat-sidenav> -->
+  <div class="sidenav-content">
+    <router-outlet></router-outlet>
+  </div>
+
+</mat-sidenav-container>

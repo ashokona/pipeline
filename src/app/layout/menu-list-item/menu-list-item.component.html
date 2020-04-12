@@ -1,0 +1,23 @@
+<!-- <a mat-list-item [matTooltip]="!expandSideNav ? item?.displayName : null" matTooltipPosition="right" [ngStyle]="{'padding-left': (depth * 12) + 'px'}"
+  (click)="onItemSelected(item)" [ngClass]="{'active': item?.route ? this.router.url.includes(item?.route): false, 'expanded': expanded}"> -->
+<a mat-list-item [matTooltip]="!item?.underDev ? item?.displayName : 'Under Development'" matTooltipPosition="right"
+  [ngStyle]="{'padding-left': (depth * 12) + 'px'}" matTooltipClass="mat-tooltip" (click)="onItemSelected(item)"
+  [ngClass]="{'active': isActive(), 'expanded': expanded}">
+  <!-- <i class="material-icons md-36 activeItem primary">crop_free </i> -->
+  <mat-icon class="routeIcon" *ngIf="item?.iconName && depth === 0">{{item.iconName}}</mat-icon>
+  <!-- <span class="side-items-first" *ngIf="!item.iconName">{{item.displayName | slice:0:1 | uppercase}}</span> -->
+  <ng-container *ngIf="expandSideNav">
+    <span class="menu-item-name"
+      [ngClass]="{'parent-menu-item-name' : item.children ? true : false }">{{item.displayName}}</span>
+    <span fxFlex *ngIf="item.children && expandSideNav">
+      <span fxFlex></span>
+      <mat-icon [@indicatorRotate]="expanded ? 'expanded': 'collapsed'">
+        expand_more
+      </mat-icon>
+    </span>
+  </ng-container>
+</a>
+<div *ngIf="expandSideNav && expanded">
+  <cops-menu-list-item *ngFor="let child of item.children" [item]="child" [depth]="depth+1">
+  </cops-menu-list-item>
+</div>

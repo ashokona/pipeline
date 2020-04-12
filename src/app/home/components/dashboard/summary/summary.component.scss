@@ -1,0 +1,38 @@
+@import '../../../../../variables.scss';
+
+.cops-summary-card {
+  // padding: 16px;
+  height: 100px;
+  // background: $cops-primary-light;
+  cursor: pointer;
+  // .mat-card-title {}
+
+  .mat-card-content {
+    height:100%;
+    // margin: 0;
+    .value{
+      font-size: 22px;
+      color:$cops-primary;
+    }
+    .name{
+      font-size: 14px;
+    }
+  }
+}
+
+.cops-summary-card:hover {
+  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12)
+}
+// .warn.sm.mat-button, .mat-flat-button, .mat-icon-button, .mat-stroked-button{
+//   min-width: 0px;
+//   line-height: 24px;
+// }
+
+:host ::ng-deep .warn .mat-progress-bar-fill::after {
+  background-color: $cops-warn;
+}
+
+:host ::ng-deep .success .mat-progress-bar-fill::after {
+  background-color: $cops-success;
+}
+

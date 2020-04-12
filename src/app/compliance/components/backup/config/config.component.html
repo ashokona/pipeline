@@ -1,0 +1,155 @@
+<!-- <div class="container" ng-app="myApp" ng-controller="myController"> -->
+  <mat-card class="mat-card-primay-tb">
+      <form [formGroup]="configFormGroup"  fxLayout="column" fxLayoutGap="16px">
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+              <h4 class="bold primary">CONFIG</h4>
+              <mat-form-field >
+                        <mat-select placeholder ="EC2/RDS" formControlName="selectedDropdown" >
+                          <mat-option *ngFor="let region of selectedDropdown" [value]="region">
+                              {{region}}
+                          </mat-option>
+                        </mat-select>
+              </mat-form-field>
+      </div>
+    <mat-card-content>
+      
+        
+         
+
+      <div class="container">            
+           <mat-horizontal-stepper [linear]="isLinear" #stepper>
+            <mat-step [stepControl]="serviceFormGroup">
+              <form fxLayout="column" fxLayoutGap="16px" [formGroup]="serviceFormGroup">
+                <div>
+                  <ng-template matStepLabel>Service</ng-template>
+                </div>
+                <h4 class="bold primary">Choose Backup</h4>
+                <div>
+                  <mat-radio-group formControlName="serviceName" required fxLayout="row wrap" fxLayoutGap="16px grid">
+                    <mat-radio-button fxFlex value="defaultBackupPlan">Default Backup Plan</mat-radio-button>
+                    <mat-radio-button fxFlex value="existingBackupPlan">Start From Existing Backup Plan</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+                <div fxLayoutAlign="end center">
+                  <button mat-raised-button color="primary" (click)="onServiceSelect()" matStepperNext>Next</button>
+                </div>
+              </form>
+            </mat-step>
+            <mat-step [stepControl]="configurationFormGroup">
+              <form [formGroup]="configurationFormGroup" fxLayout="column" fxLayoutGap="16px">
+                <div>
+                  <ng-template matStepLabel>{{ serviceFormGroup.value.serviceName }} Configuration</ng-template>
+                </div>
+                <div fxLayout="row wrap" fxLayoutGap="16px grid">
+                  <ng-container *ngIf="serviceFormGroup.value.serviceName === 'defaultBackupPlan'">
+                    <mat-form-field fxFlex="25%">
+                      <mat-select placeholder ="Choose Account" formControlName="defaultBackupAccountOptions" >
+                        <mat-option *ngFor="let account of defaultBackupAccountOptions" [value]="account">
+                            {{account}}
+                        </mat-option>
+                      </mat-select>
+                  </mat-form-field>
+                    <mat-form-field fxFlex="25%">
+                      <mat-select placeholder ="Backup Plan" formControlName="defaultBackupOption" >
+                        <mat-option *ngFor="let option of defaultBackupOption" [value]="option">
+                            {{option}}
+                        </mat-option>
+                      </mat-select>
+                  </mat-form-field>
+                  <mat-form-field fxFlex="25%">
+                    <mat-select placeholder ="Backup Plan Name" formControlName="defaultBackupPlanName" >
+                      <mat-option *ngFor="let option of defaultBackupPlanName" [value]="option">
+                          {{option}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <mat-form-field fxFlex="25%">
+                    <mat-select placeholder ="Region" formControlName="awsRegions" >
+                      <mat-option *ngFor="let region of awsRegions" [value]="region">
+                          {{region}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <h4 class="bold primary" fxFlex="100%">Assign Resources By Tags</h4>
+                    <mat-form-field fxFlex="15%">
+                      <input matInput placeholder="Key" formControlName="defaultTagKey" required>
+                    </mat-form-field>
+                    <mat-form-field fxFlex="25%">
+                      <input matInput placeholder="Value" formControlName="defaultTagValue" required>
+                    </mat-form-field>
+                  </ng-container>
+                  <ng-container *ngIf="serviceFormGroup.value.serviceName === 'existingBackupPlan'">
+                    <mat-form-field fxFlex="25%">
+                      <mat-select placeholder ="Choose Account" formControlName="defaultBackupAccountOptions" >
+                        <mat-option *ngFor="let account of defaultBackupAccountOptions" [value]="account">
+                            {{account}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <mat-form-field fxFlex="25%">
+                      <input matInput placeholder="Backup Plan Name" formControlName="backupPlanName" required>
+                    </mat-form-field>
+                    <mat-form-field fxFlex="25%">
+                      <mat-select placeholder ="Select Template" formControlName="selectTemplate" (selectionChange)="onBackupTemplateSelect($event.value)" >
+                        <mat-option *ngFor="let template of selectTemplate" [value]="template">
+                            {{template}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <mat-form-field fxFlex="25%">
+                      <mat-select placeholder ="Backup Rules" formControlName="backupRulesOptions">
+                        <mat-option *ngFor="let rule of backupRulesOptions" [value]="rule">
+                            {{rule}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <mat-form-field fxFlex="25%">
+                      <mat-select placeholder ="Region" formControlName="awsRegions" >
+                        <mat-option *ngFor="let region of awsRegions" [value]="region">
+                            {{region}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <h4 fxFlex="75%"></h4>
+                    <div fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="16px grid">
+                      <h4 class="bold primary" fxFlex="100%">Assign Resources By Tags</h4>
+                      <i class="material-icons" (click)="addItem()" title="Add More" >add_circle_outline</i>
+                    <table class="example-full-width" cellspacing="0">
+                      <div formArrayName="tags_name" *ngFor="let tags_name of configurationFormGroup.get('tags_name')?.controls; let i = index;">
+                        <div [formGroupName]="i">
+                          <!-- <input formControlName="name" placeholder="tag name">
+                          <input formControlName="value" placeholder="tag value"> -->
+                            <tr>
+                              <td><mat-form-field class="example-full-width">
+                                <input matInput placeholder="tag name" formControlName="name" required>
+                              </mat-form-field></td>
+                              <td><mat-form-field class="example-full-width">
+                                <input matInput placeholder="Tag value" formControlName="value" required>
+                              </mat-form-field></td>
+                            </tr>
+                        </div>
+                        <!-- Chosen name: {{ genericConfigurationFormGroup.controls.tags_name.controls[i].controls.name.value }} -->
+                      </div>
+                    </table>
+                    <i class="material-icons" (click)="removeItem()" title="Add less" >remove_circle_outline</i>
+                  </div>
+                  </ng-container>
+                </div>
+                <div fxLayout="row">
+                  <div fxFlex>
+                    <button mat-stroked-button color="primary" matStepperPrevious>Back</button>
+                  </div>
+                  <div fxFlex fxLayoutAlign="end" fxLayoutGap="16px">
+                    <button mat-raised-button color="primary" (click)="onBackupSubmit()" [copsButtonLoading]="isLoading">Create Backup</button>
+                  </div>
+                </div>
+              </form>
+            </mat-step>
+           </mat-horizontal-stepper>            
+      </div>
+     
+    </mat-card-content>
+  </form>
+  </mat-card>
+<!-- </div> -->
+        

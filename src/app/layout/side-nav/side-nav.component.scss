@@ -1,0 +1,49 @@
+@import '../../../variables.scss';
+
+// .mat-nav-list .mat-list-item .mat-list-icon{
+//   padding:0px;
+// }
+.mat-nav-list{
+  padding: 0px;
+}
+// .mat-nav-list .mat-list-item.mat-list-item-with-avatar:hover{
+//   background:  $cops-primary;
+//   // background:  $cops-dull;
+// }
+// :host ::ng-deep .mat-nav-list .mat-list-item.mat-list-item-with-avatar:active{
+//   color:$cops-primary;
+//   background: $cops-accent;
+// }
+
+:host ::ng-deep .mat-list .mat-list-item, .mat-list .mat-list-option, .mat-nav-list .mat-list-item, .mat-nav-list .mat-list-option, .mat-selection-list .mat-list-item, .mat-selection-list .mat-list-option{
+  height:48px;
+}
+// :host ::ng-deep .mat-list-item-content {
+//   padding: 0 10px!important;
+// }
+.menu-btn{
+  color: $cops-light;
+  width: 48px;
+  height: 56px;
+}
+
+.user-management {
+  .mat-icon {
+    padding: 0 12px;
+  }
+}
+
+:host::ng-deep.mat-menu-content {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+
+.side-nav-overlay {
+  width: 48px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: not-allowed;
+  background-color: rgba(0,0,0,0.5);
+}

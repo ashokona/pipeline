@@ -1,0 +1,23 @@
+<mat-card class="verify-card">
+    <mat-card-content fxLayout="column" fxLayoutAlign="center center">
+      <ng-container *ngIf="loading">
+        <span>
+          <mat-spinner></mat-spinner>
+        </span>
+      </ng-container>
+      <ng-container *ngIf="!loading">
+        <i *ngIf="type === 'success'" class="material-icons md-48 success">{{icon}}</i>
+        <i *ngIf="type === 'error'" class="material-icons md-48 warn">{{icon}}</i>
+        <i *ngIf="!type" class="material-icons md-48 primary">{{icon}}</i>
+        <h2>{{title}}</h2>
+        <p>{{description}}</p>
+        <button mat-flat-button color="primary" type="submit" (click)="onActionClick($event)">{{action}}</button>
+      </ng-container>
+      <!-- <ng-container *ngIf="!isLoading && !isVerified">
+        <i class="material-icons md-48 warn">error_outline</i>
+        <h2>{{responseMessage}}</h2>
+        <p>Request for new link</p>
+        <button mat-flat-button color="primary" type="submit">Verify Email</button>
+      </ng-container> -->
+    </mat-card-content>
+  </mat-card>

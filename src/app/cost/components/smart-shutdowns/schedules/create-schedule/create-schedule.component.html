@@ -1,0 +1,78 @@
+<div class="create-schedule-container">
+  <form class="create-schedule-form" fxLayout="column" fxLayoutAlign="space-between none"
+    [formGroup]="scheduleForm" (ngSubmit)="!scheduleForm.valid ? null : onCreateSchedule()">
+    <div fxLayout="column" class="section" fxLayoutGap="20px">
+      <div>
+        <mat-form-field class="full-width" color="primary">
+          <input matInput type="text" formControlName="name" placeholder="Schedule Name" required>
+          <mat-error *ngIf="scheduleForm.controls['name'].errors && scheduleForm.controls['name'].errors.required">
+            Schedule Name is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxLayoutGap="10px">
+        <span fxFlex="100%" fxLayout="row" fxLayoutAlign="space-between center">
+          <span class="label" class="input-label">{{daySelecterLabel}} </span>
+          <button mat-button *ngIf="daysSelecterDisabled" (click)="onClearDaysSelected()" color="primary">{{editValue}}</button>
+        </span>
+        <span fxFlex="100%" fxLayout="column">
+          <mat-button-toggle-group fxLayout="row" formControlName="days" fxLayoutAlign="space-evenly center" multiple
+            (change)="onDaySelect()" #group="matButtonToggleGroup">
+            <ng-container *ngFor="let day of days">
+              <mat-button-toggle class="mat-button-toggle-checked" fxFlex="100%" [value]="day.value" aria-label="Text align left">
+                {{day.name}}
+              </mat-button-toggle>
+            </ng-container>
+          </mat-button-toggle-group>
+          <span dir="rtl">
+          </span>
+        </span>
+      </div>
+      <div fxLayout="row" *ngIf="daysSelecterDisabled" fxLayoutGap="30px">
+        <div fxFlex="50%" fxLayout="row" fxLayoutAlign="start center">
+          <span fxFlex="40%">
+            <label class="input-label">SHUTDOWN ON <b>{{weekdays[group.value[0]] | uppercase}}</b> @</label>
+          </span>
+          <span fxFlex="40%">
+            <mat-form-field class="full-width" color="primary">
+              <input matInput placeholder="Time:" formControlName="stopTime"
+                (dateTimeChange)="onStopTimeChange($event)"
+                [owlDateTimeTrigger]="dt1"
+                [owlDateTime]="dt1">
+              <owl-date-time [pickerType]="'timer'"  [startAt]="stopTime" [stepMinute]="30" #dt1></owl-date-time>
+              <mat-error *ngIf="scheduleForm.controls['name'].errors && scheduleForm.controls['name'].errors.required">
+                Schedule Name is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </span>
+          <span fxFlex="20%">
+            <label class="input-label"><b>EST</b></label>
+          </span>
+        </div>
+
+        <div fxFlex="50%" fxLayout="row" fxLayoutAlign="start center">
+          <span fxFlex="40%">
+            <label class="input-label">STARTUP ON <b>{{weekdays[group.value[1]] | uppercase}}</b> @</label>
+          </span>
+          <span fxFlex="40%">
+            <mat-form-field class="full-width" color="primary">
+              <input matInput placeholder="Time:"
+                (dateTimeChange)="onStartTimeChange($event)"            
+                formControlName="startTime" [owlDateTimeTrigger]="dt2"
+                [owlDateTime]="dt2">
+              <owl-date-time [pickerType]="'timer'" [startAt]="startTime" [stepMinute]="30" #dt2></owl-date-time>
+            </mat-form-field>
+          </span>
+          <span fxFlex="20%">
+            <label class="input-label"><b>EST</b></label>
+          </span>
+        </div>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div dir="rtl" class="section" fxLayout="row" fxLayoutGap="20px">
+      <button mat-raised-button type="submit" class="mat-button-round create-schedule-button" color="primary" [copsButtonLoading]="isLoading">{{create_edit_button}}</button>
+      <!-- <button mat-button class="mat-button-round" (click)="onCancel()">Cancel</button> -->
+    </div>
+  </form>
+</div>

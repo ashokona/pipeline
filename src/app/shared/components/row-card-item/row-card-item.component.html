@@ -1,0 +1,22 @@
+<mat-card>
+  <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap.xs="16px" fxLayoutGap.sm="16px">
+    <ng-container *ngFor="let item of data; let i = index">
+        <div fxFlex="25" fxLayout="row" fxLayoutAlign="center center" >
+          <div fxFlex="60" fxLayout="column" fxLayoutAlign="center center">
+            <span class="fs-24" [ngClass]="item.color">{{item.value}}</span>
+            <span class="fs-16 primary">{{item.name}}</span>
+          </div>
+          <div fxFlex="40" fxLayoutAlign="center center">
+            <span><i class="material-icons md-48" [ngClass]="item.color">
+                {{item.icon}}
+              </i></span>
+          </div>
+        </div>
+        <div fxFlex [ngClass.sm] = "(data.length - 1) !== i ? 'bdr-bottom' : null"
+        [ngClass.xs] = "(data.length - 1) !== i ? 'bdr-bottom' : null"
+        [ngClass.lg] = "(data.length - 1) !== i ? 'bdr-right' : null"
+        [ngClass.md] = "(data.length - 1) !== i ? 'bdr-right' : null"
+        ></div>
+    </ng-container>
+  </div>
+</mat-card>

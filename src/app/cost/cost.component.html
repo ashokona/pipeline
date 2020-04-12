@@ -1,0 +1,10 @@
+<cops-custom-nav [title]="title" [route]="parentRoute" [tabs]="costTabs"></cops-custom-nav>
+<div class="container" fxLayout="column" fxLayoutGap="20px">
+  <!-- <span fxFlex>
+    <cops-row-card-item [data]="rowCardItemData"></cops-row-card-item>
+  </span> -->
+  <span copsRestrictedAccess fxFlex [ngClass]="{'hide': costModel.gridLoading}">
+    <router-outlet></router-outlet>
+  </span>
+<mat-spinner *ngIf="costModel.gridLoading" class="spinner-custom"></mat-spinner>
+</div>

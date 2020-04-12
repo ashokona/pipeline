@@ -1,0 +1,35 @@
+<div class="settings-flyout">
+  <div class="settings-container container" fxLayout="column" fxLayoutGap="20px">
+    <div>
+      <span class="heading-primary">Edit Subscription</span>
+    </div>
+    <form fxFlex="100%" [formGroup]="subscriptionForm" (ngSubmit)="editSubscription()" fxLayout="column"
+      fxLayoutAlign="space-between" fxLayoutGap="20px">
+      <div fxLayout="column" fxFlex="100%" fxLayoutGap="20px">
+        <div>
+          <span>Subscription Id</span>
+        </div>
+        <div>
+          <span>{{ subscription.subscriptionId }}</span>
+        </div>
+        <mat-form-field>
+          <mat-select placeholder="Licence Type" formControlName="licenceType" required>
+            <mat-option *ngFor="let licenceType of licenceTypes" [value]="licenceType.value">
+              {{licenceType.name | uppercase }}
+            </mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="subscriptionForm.controls['licenceType'].errors && subscriptionForm.controls['licenceType'].errors.required">
+            LicenceType is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutGap="20px" dir="rtl">
+        <button mat-raised-button type="submit" class="mat-button-round" color="primary" #eleRef
+          [copsDisableByGroup]="true">Save Changes</button>
+        <button mat-button type="submit" class="mat-button-round" (click)="onCancel()" color=""
+          [disabled]="settings.isLoading">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+<div class="settings-flyout">
+  <div class="settings-container container" fxLayout="column" fxLayoutGap="20px">
+    <div>
+      <span class="heading-primary">Remidiate Tag</span>
+    </div>
+    <form fxFlex="100%" [formGroup]="tagForm" fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="20px">
+      <div fxLayout="column" fxFlex="100%" fxLayoutGap="20px">
+        <span class="heading-primary-noborder">
+          {{ tagForm.controls['InstanceId'].value }}
+        </span>
+        <span class="heading-primary-noborder">
+          {{ tagForm.controls['key'].value }}
+        </span>
+        <mat-form-field *ngIf="tagForm.controls['type'].value !== 'select'">
+          <input matInput placeholder="Value" formControlName="value" required name>
+          <mat-error *ngIf="tagForm.controls['value'].errors && tagForm.controls['value'].errors.required">
+            Tag value is <strong>required.</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field *ngIf="tagForm.controls['type'].value === 'select'">
+          <mat-select placeholder="Value" formControlName="value" required>
+            <mat-option *ngFor="let value of instance?.options" [value]="value">
+              {{value}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="tagForm.controls['value'].errors && tagForm.controls['value'].errors.required">
+            Value is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutGap="20px" dir="rtl">
+        <button mat-raised-button *ngIf="isEdit" type="submit" class="mat-button-round" color="primary"
+          (click)="!tagForm.valid ? null : editTag()" [copsButtonLoading]="isLoading">Apply Changes</button>
+        <button mat-button type="submit" class="mat-button-round" (click)="onCancel()" color=""
+          [disabled]="settings.isLoading">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

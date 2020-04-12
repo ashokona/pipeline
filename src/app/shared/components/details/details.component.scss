@@ -1,0 +1,27 @@
+@import '../../../../variables.scss';
+
+.mat-card{
+  .mat-card-title{
+    border-bottom:1px solid $cops-primary;
+    // margin:0;
+  }
+  .mat-card-content{
+    background: $cops-primary-light;
+    .details-row{
+      // background: white;
+      padding:12px;
+      .column{
+        color:$cops-primary;
+        margin-right:12px;
+        padding-right:12px;
+      }
+      
+    }
+    .details-row:nth-child(4n+1), .details-row:nth-child(4n+0){
+      background-color: white;
+    }
+    // .details-row:nth-child(3n+1), .details-row:nth-child(3n+0){
+    //   background-color: $cops-dull;
+    // }
+  }
+}

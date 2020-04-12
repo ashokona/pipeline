@@ -1,0 +1,29 @@
+<!-- <div> -->
+<div *ngIf="isConfigured; else emptyState">
+  <div fxLayout="column" fxLayoutGap="20px">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <span class="heading-primary">Configured Accounts</span>
+      <div fxLayout="row" fxLayoutGap="20px" *ngIf="groups && groups.length > 0">
+        <button mat-raised-button class="mat-button-round" color="primary" (click)="onAddNewAccount()"
+        #eleRef [copsDisableByGroup]="true">Add New Cloud Account</button>
+      </div>
+    </div>
+    <div>
+      <cops-data-table (refreshClicked)="onRefreshData($event)" (deleteClicked)="onDeleteAccount($event)"
+        (editClicked)="onEditAccount($event)" (customClicked)="onConfigureAccount($event)"
+        (columnActionClicked)="onConfigureAccount($event)" (selectClicked)="onRowSelected($event)"
+        [options]="tableOptions" [data]="tableData" [columns]="displayedColumns">
+      </cops-data-table>
+    </div>
+  </div>
+</div>
+
+<cops-manage-account [groups]="groups" [configure]="isConfigure" [account]="account" [accounts]="tableData"
+  (closeFlyout)="onCloseFlyout($event)" *ngIf="manageAccount"></cops-manage-account>
+
+<ng-template #emptyState>
+  <cops-empty-state icon="cloud_off"
+    title="Congratulations on taking the first step towards taking control over your cloud."
+    description="Let us get started by adding your first cloud account you want to optimize." action="Add Cloud account"
+    (actionClicked)="onActionClicked($event)"></cops-empty-state>
+</ng-template>

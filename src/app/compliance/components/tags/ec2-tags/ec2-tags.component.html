@@ -1,0 +1,18 @@
+<div fxLayout="column" fxLayoutGap="20px">
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <span class="heading-secondary">EC2 Tags</span>
+  </div>
+  <!-- <div *ngIf="!isLoading; else loadingState"> -->
+    <cops-data-table (refreshClicked)="onRefreshTags($event)" (editClicked)="onEditTag($event)" [options]="tableOptions"
+      [data]="instanceData" [columns]="displayedColumns">
+    </cops-data-table>
+  <!-- </div> -->
+</div>
+
+<cops-ec2-tag [instance]="instance" (cancelClicked)="onCancelTag($event)" *ngIf="manageTag"></cops-ec2-tag>
+
+<!-- <ng-template #loadingState>
+  <div class="full-height" fxLayout="column" fxLayoutAlign="center center">
+    <mat-spinner [diameter]="50"></mat-spinner>
+  </div>
+</ng-template> -->

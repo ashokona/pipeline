@@ -1,0 +1,29 @@
+<mat-card class="dashcard-card-primary" fxLayoutAlign="center none" fxLayout="column">
+  <ng-container>
+    <mat-card-title fxLayout="row" fxFlex="15" routerLink="/security" class="content-padding bg-primary link">
+      <span fxFlex class="fs-20 bold">RISKS IDENTIFIED</span>
+      <span fxFlex dir="rtl">
+        <i class="material-icons md-18 light link" routerLink="/security">pageview</i>
+      </span>
+    </mat-card-title>
+    <mat-card-content *copsContentState="loadingState" fxFlex="85">
+      <div fxLayout="row" fxFill>
+        <div fxFlex="70%" fxFill>
+          <cops-google-chart [data]="securityPieChartData" [config]="securityPieChartConfig"
+            [elementId]="securityPieElementId" [chartType]="'pie'"></cops-google-chart>
+        </div>
+        <div fxFlex="30%" fxFill>
+          <div fxLayout="column" fxFill fxLayoutAlign="center center">
+            <div fxFlex="33" fxLayout="column" fxFill fxLayoutAlign="center center" *ngFor="let each of Risks">
+              <!-- <span class="light fs-14">Item 1</span> -->
+              <span class="fs-18 primary bold">{{each[0]}}</span>
+              <!-- <h5>IAM</h5> -->
+              <span class="primary fs-20 bold">{{each[1]}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </mat-card-content>
+  </ng-container>
+</mat-card>

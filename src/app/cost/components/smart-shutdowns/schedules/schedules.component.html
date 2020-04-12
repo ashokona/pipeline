@@ -1,0 +1,17 @@
+<ng-container *copsAuthoriser><button mat-raised-button *ngIf="!manageSchedule" class="mat-button-round create-schedule-button" color="primary" (click)="onManageSchedule()"
+  #eleRef [copsDisableByGroup]="true">Add Schedule</button></ng-container>
+<button mat-raised-button *ngIf="manageSchedule" class="mat-button-round create-schedule-button" color="" (click)="onCancelNewSchedule()">Cancel</button>
+
+<cops-data-table 
+  *ngIf="!manageSchedule"
+  (refreshClicked)="onRefreshSchedules()"
+  (deleteClicked)="onDelteData($event)"
+  (customClicked)="onAddInstances($event)"
+  (selectClicked)="onRowSelected($event)"
+  (editClicked)="onEditSchedule($event)"
+  [options]="tableOptions" [data]="tableData" [columns]="displayedColumns">
+</cops-data-table>
+<div><b>NOTE: Timezone is EST</b></div>
+<ng-container *ngIf="manageSchedule">
+  <cops-manage-schedule [schedule]="schedule" (manageScheudleDone)="onManageScheudleDone($event)"></cops-manage-schedule>
+</ng-container>

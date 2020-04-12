@@ -1,0 +1,33 @@
+@import '../../../variables.scss';
+
+
+.login-card {
+  width: 400px;
+  padding:0px;
+  padding-top: $content-padding;
+  .megaops-logo {
+    height: 26px;
+    width:30px;
+    margin: 0 4px 3px 0;
+    vertical-align: middle;
+  }
+  .login-header-image {
+    background-image: url('../../../assets/img/logo.png');
+    background-size: cover;
+  }
+  .mat-card-content {
+    padding: $content-padding;
+    margin-bottom: 0px;
+  }
+
+  .sign-in-button {
+    line-height: 45px;
+    border-top: 2px solid $cops-primary;
+    border-radius: 0px;
+  }
+}
+
+.verify-card {
+  min-width: 400px;
+  padding:24px;
+}

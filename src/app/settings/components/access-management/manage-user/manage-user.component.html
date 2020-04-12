@@ -1,0 +1,50 @@
+<div class="settings-flyout">
+  <div class="settings-container container" fxLayout="column" fxLayoutGap="20px">
+    <div>
+      <span class="heading-primary">New User</span>
+    </div>
+    <form fxFlex="100%" [formGroup]="userForm"
+      (ngSubmit)="!userForm.valid ? null : addOrEditUser()" fxLayout="column" fxLayoutAlign="space-between"
+      fxLayoutGap="20px">
+      <div fxLayout="column" fxFlex="100%" fxLayoutGap="20px">
+        <mat-form-field>
+          <input matInput placeholder="Email" formControlName="email" required email>
+          <mat-error *ngIf="userForm.controls['email'].errors && userForm.controls['email'].errors.email">
+            Please enter a valid email address
+          </mat-error>
+          <mat-error
+            *ngIf="userForm.controls['email'].errors && userForm.controls['email'].errors.required">
+            User email is <strong>required.</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Role" formControlName="role" required>
+            <mat-option *ngFor="let role of roles" [value]="role.value">
+              {{role.name}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="userForm.controls['role'].errors && userForm.controls['role'].errors.required">
+            Role is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Group" formControlName="groups" multiple required>
+            <mat-option *ngFor="let group of groups" [value]="group._id">
+              {{group.groupName}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="userForm.controls['groups'].errors && userForm.controls['groups'].errors.required">
+            Gorup is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutGap="20px" dir="rtl">
+        <button mat-raised-button *ngIf="!isEdit" type="submit" class="mat-button-round" color="primary" [copsButtonLoading]="settings.isLoading"
+        #eleRef [copsDisableByGroup]="true">Add User</button>
+        <button mat-raised-button *ngIf="isEdit" type="submit" class="mat-button-round" color="primary" [copsButtonLoading]="isLoading"
+        #eleRef [copsDisableByGroup]="true">Save Changes</button>
+        <button mat-button type="submit" class="mat-button-round" (click)="onCancel()" color="" [disabled]="settings.isLoading">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

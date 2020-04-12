@@ -1,0 +1,84 @@
+<div class="settings-flyout">
+  <div class="settings-container container" fxLayout="column" fxLayoutGap="20px">
+    <div>
+      <span class="heading-primary">New Group</span>
+    </div>
+    <form fxFlex="100%" [formGroup]="groupForm" (ngSubmit)="!groupForm.valid ? null : addOrEditUser()" fxLayout="column"
+      fxLayoutAlign="space-between" fxLayoutGap="20px">
+      <div fxLayout="column" fxFlex="100%" fxLayoutGap="20px">
+        <mat-form-field>
+          <input matInput placeholder="Group Name" formControlName="groupName" required>
+          <mat-error *ngIf="groupForm.controls['groupName'].errors && groupForm.controls['groupName'].errors.required">
+            Group Name is <strong>required.</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <mat-chip-list #chipList>
+            <mat-chip *ngFor="let account of settings.selectedAccounts" [selectable]="selectable"
+              [removable]="removable" (removed)="remove(account)">
+              {{account.accountName}}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input placeholder="Select or add Accounts" #accountsInput [formControl]="accountsCtrl"
+              [matAutocomplete]="auto" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+          </mat-chip-list>
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+            <mat-option *ngFor="let account of filteredAccounts" [value]="account">
+              <span>{{account.accountName}} / {{account._id}} / {{account.provider}}</span>
+              <!-- | <span>{{filteredInstance.Region}}</span> | <span>{{filteredInstance.InstanceType}}</span> -->
+            </mat-option>
+          </mat-autocomplete>
+          <mat-hint align="end">Enter comma seperated Accounts</mat-hint>
+        </mat-form-field>
+        <!-- <mat-form-field> -->
+        <!-- <mat-radio-group aria-label="Select an option">
+            <mat-radio-button value="1">Option 1</mat-radio-button>
+            <mat-radio-button value="2">Option 2</mat-radio-button>
+          </mat-radio-group> -->
+        <!-- <input matInput placeholder="Group Name" formControlName="groupName" required>
+          <mat-error
+            *ngIf="groupForm.controls['groupName'].errors && groupForm.controls['groupName'].errors.required">
+            Group Name is <strong>required.</strong>
+          </mat-error> -->
+        <div>
+          <span>ReadOnly Group</span>
+        </div>
+        <mat-radio-group formControlName="readOnly" fxLayout="row wrap" fxLayoutGap="16px grid">
+          <mat-radio-button fxFlex *ngFor="let gs of groupStates" [value]="gs.value">{{ gs.display }}</mat-radio-button>
+          <!-- <mat-radio-button value=true>Yes</mat-radio-button>
+              <mat-radio-button value=false>No</mat-radio-button> -->
+        </mat-radio-group>
+        <!-- </mat-form-field> -->
+        <!-- <mat-form-field>
+          <mat-select placeholder="Role" formControlName="role">
+            <mat-option *ngFor="let role of roles" [value]="role.value">
+              {{role.name}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="groupForm.controls['role'].errors && groupForm.controls['role'].errors.required">
+            Role is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Group" formControlName="groups" multiple>
+            <mat-option *ngFor="let group of groups" [value]="group._id">
+              {{group.groupName}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="groupForm.controls['groups'].errors && groupForm.controls['groups'].errors.required">
+            Gorup is <strong>required</strong>
+          </mat-error>
+        </mat-form-field> -->
+      </div>
+      <div fxLayout="row" fxLayoutGap="20px" dir="rtl">
+        <button mat-raised-button *ngIf="!isEdit" type="submit" class="mat-button-round" color="primary"
+          [copsButtonLoading]="settings.isLoading" #eleRef [copsDisableByGroup]="true">Add Group</button>
+        <button mat-raised-button *ngIf="isEdit" type="submit" class="mat-button-round" color="primary" #eleRef
+          [copsDisableByGroup]="true">Save Changes</button>
+        <button mat-button type="submit" class="mat-button-round" (click)="onCancel()" color=""
+          [disabled]="settings.isLoading">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<div class="empty-state" fxFill="100%" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+  <div>
+    <i class="material-icons md-48 gray">
+      {{icon}}
+      </i>
+  </div>
+  <span class="fs-18 gray bold">{{title}}</span>
+  <span class="fs-16 gray">{{description}}</span>
+  <span>
+    <button mat-button color="primary" (click)="onActionClicked($event)">{{action}}</button>
+  </span>
+</div>

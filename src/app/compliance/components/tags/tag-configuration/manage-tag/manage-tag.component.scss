@@ -1,0 +1,22 @@
+@import '../../../../../../variables.scss';
+
+.settings-flyout {
+  position: fixed !important;
+  top: 0;
+  right: 0;
+  width: 100%;
+  background-color: rgba(0,0,0,0.5);
+  // opacity: 0.5;
+  height: 100%;
+  z-index: 99 !important;
+  .settings-container{
+    width: 60%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    position: absolute;
+    background: $cops-dull;
+    overflow-y: scroll;
+    padding: $content-padding-large;
+  }
+}

@@ -1,0 +1,25 @@
+<div class="container">
+  <mat-form-field class="full-width">
+    <mat-chip-list #chipList>
+      <mat-chip *ngFor="let instance of selectedInstances" [selectable]="selectable" [removable]="removable"
+        (removed)="remove(instance)">
+        {{instance.InstanceId}}
+        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+      </mat-chip>
+      <input placeholder="Select or add instances" #instancesInput [formControl]="addInstancesCtrl"
+        [matAutocomplete]="auto" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)" (paste)="paste($event)">
+    </mat-chip-list>
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+      <mat-option *ngFor="let filteredInstance of filteredInstances" [value]="filteredInstance">
+        <span>{{filteredInstance.InstanceId}}</span>
+        <!-- | <span>{{filteredInstance.Region}}</span> | <span>{{filteredInstance.InstanceType}}</span> -->
+      </mat-option>
+    </mat-autocomplete>
+    <mat-hint align="end">Enter comma seperated instance ids</mat-hint>
+  </mat-form-field>
+</div>
+<mat-divider></mat-divider>
+<div class="container" dir="rtl">
+  <button mat-raised-button type="submit" class="mat-button-round create-schedule-button" (click)="onAddInstances()" [copsButtonLoading]="isLoading" color="primary">Update Schedule</button>
+</div>

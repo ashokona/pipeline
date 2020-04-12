@@ -1,0 +1,24 @@
+<div fxLayout="column" class="smart-shutdowns-container" fxLayoutGap="20px">
+  <div fxFlex>
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <span fxFlex>
+        <cops-tabs [tabs]='tabs' (tabChange)="onTabChanged($event)" [selectedIndex]="selectedTabIndex"></cops-tabs>
+      </span>
+      <span fxFlex fxLayoutAlign="end center" >
+      </span>
+    </div>
+  </div>
+  <div fxFlex>
+    <cops-data-table
+    (refreshClicked)="onRefreshData($event)"
+    (customClicked)="onRecommendationDetails($event)"
+    [options]="tableOptions" [data]="data" [columns]="displayedColumns">
+  </cops-data-table>
+  <!-- <cops-list [columns]='columnsData' [data]='data' [isLoading]="isLoading"></cops-list> -->
+
+    <!-- <router-outlet></router-outlet> -->
+  </div>
+</div>
+  
+  
+  

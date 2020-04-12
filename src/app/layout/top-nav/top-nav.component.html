@@ -1,0 +1,57 @@
+<!-- <div class="cops-cost-theme"> -->
+  <mat-toolbar
+  class="mat-elevation-z0 top-nav-toolbar"
+  color="primary">
+  <mat-toolbar-row fxLayoutGap="10px">
+    <span style="cursor: pointer" routerLink="/dashboard">
+      <img alt="Mega Ops" class="megaops-logo" src="../../../assets/img/logo.png" >
+      <span>Cloud COpS</span>
+    </span>
+    <span class="top-nav-spacer"></span>
+    <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
+      <span>
+        <div fxHide.sm fxHide.xs style="font-size:14px;min-width: 100px;">
+          <!-- <app-look-up [options]="lookupOptions"></app-look-up> -->
+          <mat-form-field class="full-width" floatLabel="never">
+            <mat-label>Group</mat-label>
+            <mat-select [(value)]="groupSelected" (selectionChange)="onGroupChange($event)">
+              <mat-option *ngFor="let group of currentUser?.groups" [value]="group._id">
+                {{group.groupName}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </span>
+      <button mat-icon-button [matMenuTriggerFor]="settingsMenu" *ngIf="currentUser?.role === 'admin'">
+        <mat-icon aria-label="">settings</mat-icon>
+      </button>
+
+      <button mat-mini-fab [matMenuTriggerFor]="userMenu" color="basic" class="current-user-button">
+        <span class="bold">{{currentUser?.companyName.charAt(0)}}</span>
+      </button>
+    </div>
+
+  </mat-toolbar-row>
+</mat-toolbar>
+<!-- </div> -->
+
+
+<mat-menu #settingsMenu="matMenu" yPosition="below" overlapTrigger="false">
+  <ng-container *ngFor="let item of settingstNavItems">
+    <button mat-menu-item (click)="onSettingsSelect(item.route)">
+      <mat-icon>{{item.iconName}}</mat-icon>
+      <span class="fs-16">{{item.displayName}}</span>
+    </button>
+  </ng-container>
+</mat-menu>
+
+<mat-menu #userMenu="matMenu" yPosition="below" overlapTrigger="false">
+  <button mat-menu-item>
+    <mat-icon>business</mat-icon>
+    <span>{{currentUser?.companyName}}</span>
+  </button>
+  <button mat-menu-item (click)="onSignout()">
+    <mat-icon>power_settings_new</mat-icon>
+    <span>SignOut</span>
+  </button>
+</mat-menu>

@@ -1,0 +1,98 @@
+<div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="16px">
+  <div fxFlex="33">
+    <mat-card class="cops-summary-card" routerLink="/cost">
+      <!-- <mat-card [copsContentState]="costState" class="cops-summary-card" routerLink="/cost"> -->
+      <mat-card-content *copsContentState="costState">
+        <div fxLayout="row" fxFill>
+          <div fxFlex="100" fxFill>
+            <div fxLayout="column" fxLayoutAlign="space-around" fxFill>
+              <div fxLayout="column" fxFill fxFlex="80%" fxFill>
+                <span class="cost-primary fs-20 bold">${{totalSavings}}</span>
+                <span class="fs-18">Saving Opportunities</span>
+              </div>
+            </div>
+          </div>
+          <div fxFlex="30"  fxLayoutAlign="center center" fxFill>
+            <cops-google-chart fxFill
+              *ngIf="savingsOppPieElementId"
+              [data]="savingsOppPieChartData"
+              [config]="savingsOppPieChartConfig"
+              [elementId]="savingsOppPieElementId" [chartType]="'pie'"></cops-google-chart>
+            <!-- <ngx-gauge [size]="guageSize" [type]="gaugeType" [foregroundColor]="primary" backgroundColor="$cops-dull" [value]="gaugeValue" ></ngx-gauge> -->
+            </div>
+          </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div fxFlex="33">
+    <mat-card class="cops-summary-card" routerLink="/security">
+      <mat-card-content *copsContentState="secuirtyState">
+        <div fxLayout="column" fxFill>
+          <div fxFlex="50%" fxFill>
+            <div fxLayout="row">
+              <div fxLayout="column" fxFlex="60" fxLayoutGap="5px" fxLayoutGap="5px">
+                <span class="security-primary fs-20 bold">{{totalRisks}}</span>
+                <span class="fs-18">Security Findings</span>
+              </div>
+              <!-- <div fxFlex="40" fxLayoutAlign="end start" >
+                <button mat-stroked-button class="sm success"> <i class="material-icons md-18">
+                  trending_down
+                  </i> 1.7%</button>
+              </div> -->
+            </div>
+          </div>
+          <div fxFlex="50%" fxLayoutAlign="start end" fxFill>
+            <mat-progress-bar class="warn" mode="determinate" value="40"></mat-progress-bar>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div fxFlex="33">
+    <mat-card class="cops-summary-card" routerLink="/compliance">
+      <mat-card-content *copsContentState="complainceState">
+        <div fxLayout="column" fxFill>
+          <div fxFlex="50%" fxFill>
+            <div fxLayout="row">
+              <div fxLayout="column" fxFlex="60" fxLayoutGap="5px">
+                <span class="primary fs-20 bold">{{ complianceFindings}}</span>
+                <span class="fs-18">Compliance Findings</span>
+              </div>
+              <div fxFlex="40" fxLayoutAlign="end start">
+                <!-- <button mat-stroked-button class="sm warn"> <i class="material-icons md-18">
+                    trending_up
+                  </i> 1.7%</button> -->
+              </div>
+            </div>
+          </div>
+          <div fxFlex="50%" fxLayoutAlign="start end" fxFill>
+            <mat-progress-bar mode="determinate" class="warn" value="40"></mat-progress-bar>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <!-- <div fxFlex="25">
+    <mat-card copsUnderDev class="cops-summary-card">
+      <mat-card-content>
+        <div fxLayout="row" fxFill>
+          <div fxFlex="60%" fxFill>
+            <div fxLayout="column" fxLayoutAlign="space-around" fxFill>
+              <div fxLayout="column" fxFill fxFlex="80%" fxFill>
+                <span class="value bold">192</span>
+                <span class="name">Resources</span>
+              </div>
+              <div fxFlex="20%" fxLayoutAlign="start end" fxFill>
+                <button mat-stroked-button class="sm" color="primary"> <i class="material-icons md-18">
+                  trending_up
+                  </i> 1.7%</button>
+              </div>
+            </div>
+          </div>
+          <div fxFlex="40"  fxLayoutAlign="center center">
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div> -->
+</div>

@@ -1,0 +1,86 @@
+<!-- <mat-card fxLayout="column" class="create-schedule-card">
+  <div fxFlex class="content-padding" fxLayoutAlign="space-between center">
+      <span class="heading-primary-noborder">Create Schedule</span>
+      <span>
+
+      </span>
+  </div>
+  <div fxFlex class="content-padding">
+    <ngb-timepicker [(ngModel)]="time"></ngb-timepicker>
+    <ngbd-timepicker-basic></ngbd-timepicker-basic>
+  </div>
+  <div fxLayout="row" class="content-padding" fxLayoutAlign="end center" fxLayoutGap="20px">
+    <button mat-raised-button class="mat-button-round create-schedule-button" color="">Cancel</button>    
+    <button mat-raised-button class="mat-button-round create-schedule-button" color="primary">Add Schedule</button>
+  </div>
+</mat-card> -->
+
+<!-- <h1 mat-dialog-title>Create Smart Shutdown Schedule</h1> -->
+<div mat-dialog-content >
+  <form fxLayout="column" fxLayoutGap="20px" [formGroup]="scheduleForm" (ngSubmit)="!scheduleForm.valid ? null : onCreateSchedule()">
+    <div>
+      <span class="heading-primary">Create Smart Shutdown Schedule</span>
+    </div>
+    <div>
+      <mat-form-field class="full-width" color="primary">
+        <input matInput type="text" formControlName="name" placeholder="Schedule Name" required>
+        <mat-error *ngIf="scheduleForm.controls['name'].errors && scheduleForm.controls['name'].errors.required">
+          Schedule Name is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div fxLayout="column" fxLayoutGap="10px">
+      <span fxFlex="100%" fxLayout="row" fxLayoutAlign="space-between center">
+        <label class="input-label">{{daySelecterLabel}} :</label>
+        <button mat-button *ngIf="daysSelecterDisabled" (click)="onClearDaysSelected()" color="primary">reset</button>
+      </span>
+      <span fxFlex="100%" fxLayout="column">
+        <mat-button-toggle-group fxLayout="row" formControlName="days" fxLayoutAlign="space-evenly center" multiple
+          (change)="onDaySelect()" #group="matButtonToggleGroup">
+          <ng-container *ngFor="let day of days">
+            <mat-button-toggle fxFlex="100%" [value]="day.value" aria-label="Text align left">
+              {{day.name}}
+            </mat-button-toggle>
+          </ng-container>
+        </mat-button-toggle-group>
+        <span dir="rtl">
+        </span>
+      </span>
+    </div>
+    <div fxLayout="row" *ngIf="daysSelecterDisabled" fxLayoutGap="30px">
+      <div fxFlex="50%" fxLayout="row" fxLayoutAlign="start center">
+        <span fxFlex="50%">
+          <label class="input-label">SHUTDOWN ON <b>{{weekdays[group.value[0]] | uppercase}}</b> @</label>
+        </span>
+        <span fxFlex="50%">
+          <mat-form-field class="full-width" color="primary">
+            <input matInput placeholder="Time:" formControlName="stopTime" [owlDateTimeTrigger]="dt1"
+              [owlDateTime]="dt1">
+            <owl-date-time [pickerType]="'timer'" [startAt]="startTime" [stepMinute]="30" #dt1></owl-date-time>
+            <mat-error *ngIf="scheduleForm.controls['name'].errors && scheduleForm.controls['name'].errors.required">
+              Schedule Name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </span>
+      </div>
+
+      <div fxFlex="50%" fxLayout="row" fxLayoutAlign="start center">
+        <span fxFlex="50%">
+          <label class="input-label">STARTUP ON <b>{{weekdays[group.value[1]] | uppercase}}</b> @</label>
+        </span>
+        <span fxFlex="50%">
+          <mat-form-field class="full-width" color="primary">
+            <input matInput placeholder="Time:" formControlName="startTime" [owlDateTimeTrigger]="dt2"
+              [owlDateTime]="dt2">
+            <owl-date-time [pickerType]="'timer'" [startAt]="startTime" [stepMinute]="30" #dt2></owl-date-time>
+          </mat-form-field>
+        </span>
+      </div>
+    </div>
+    <div dir="rtl" fxLayout="row" fxLayoutGap="20px">
+      <button mat-raised-button type="submit" class="mat-button-round create-schedule-button" color="primary" [copsButtonLoading] = "cost.isLoading">Create
+        Schedule Now</button>
+      <button mat-button class="mat-button-round" (click)="onCancel()" [disabled]="cost.isLoading">Cancel</button>
+    </div>
+  </form>
+</div>

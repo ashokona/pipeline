@@ -1,0 +1,35 @@
+@import '../../../../../variables.scss';
+
+
+.compliance-card{
+  padding: 3% 0px;
+  .info.warn{
+    font-size: 18px;
+    color: $cops-warn;
+  }
+  .success{
+    font-size: 18px;
+    color: $cops-success;
+  }
+  .alert{
+    font-size: 18px;
+    color: $cops-alert;
+  }
+  .count{
+    font-size: 16px;
+  }
+}
+.compliance-card.border-right{
+  border-right:1px solid $cops-primary-light;
+}
+.compliance-card.border-left{
+  border-left:1px solid $cops-accent
+}
+.compliance-card.background-light{
+  // background: mat-color($primary, 100)
+}
+
+.compliance-bottom-card{
+  padding: 3% 0px;  
+  // border-top: 1px solid $cops-primary;
+}

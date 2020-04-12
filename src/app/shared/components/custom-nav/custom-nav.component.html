@@ -1,0 +1,66 @@
+<div fxLayout="row" fxLayoutAlign="space-between stretch" class="customnav">
+  <div fxLayout="row" fxFlex="20" fxLayoutAlign="start none">
+    <div fxLayout="column" fxLayoutAlign="space-between center" class="customnav__header" (click)="onNavItem(route)"
+      [ngClass]="{'active': this.router.url.includes(route)}">
+      <span class="fs-18 bold title"> {{title| uppercase }}</span>
+      <span>
+        <!-- <i class="material-icons md-36">attach_money</i>         -->
+        <!-- <i class="material-icons link">get_app_outline</i> -->
+      </span>
+    </div>
+  </div>
+  <!-- dont delete this commented block of code -->
+
+  <!-- <div fxLayout="row" fxFlex="80" fxLayoutAlign="end stretch" class="customnav__items">
+      <ng-container *ngFor="let item of costNavItems">
+          <div fxFlex="auto" fxLayout="column"  
+          class="customnav__items__item" 
+          (click)="onNavItem(item.route)"
+          *ngIf="item.route !== 'spends'"
+          [ngClass]="{'active': item.route ? this.router.url.includes(item.route): false}" (click)="onNavItem(item.route)">
+            <div fxFlex="50" fxLayout="row" fxLayoutAlign="space-around center">
+              <span>
+                <span>{{item.prefix}} {{item.value}}</span>
+              </span>
+              <span>
+                <i class="material-icons md-28">{{item.iconName}}</i>
+              </span>
+            </div>
+            <div fxFlex="50" fxLayoutAlign="center center">
+              <span class="fs-16 bold upper-case">{{item.displayName}}</span>
+            </div>
+        </div>
+      </ng-container>
+
+    </div> -->
+  <nav mat-tab-nav-bar fxLayout="row" fxFlex="80" fxFill fxLayoutAlign="end stretch" class="customnav__items">
+    <ng-container *ngIf="tabs; else loadingState">
+      <ng-container *ngFor="let tab of tabs">
+        <a mat-tab-link fxFlex="noshrink" fxLayout="column" class="customnav__items__item" [routerLink]="tab.route"
+          routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">
+          <div fxFlex="50" fxFill fxLayout="row" fxLayoutAlign="space-around center">
+            <span>
+              <span *ngIf="tab.displayName != 'Dashboard'">{{tab.prefix}} {{tab.value}}</span>
+            </span>
+            <span>
+              <i class="material-icons md-28">{{tab.iconName}}</i>
+            </span>
+          </div>
+          <div fxFlex="50" fxFill fxLayoutAlign="center center">
+            <span class="fs-16 bold upper-case">{{tab.displayName}}</span>
+          </div>
+        </a>
+      </ng-container>
+    </ng-container>
+  </nav>
+</div>
+
+<ng-template #loadingState>
+  <ng-container *ngFor="let i of [1,2,3]">
+    <div fxLayout="column" class="block-loader" fxFlex="20" fxLayoutAlign="space-evenly start"
+    fxLayoutGap="20px">
+    <div fxFlex="10" class="loader-header block-loader-animation"></div>
+    <div fxFlex="20" class="loader-content block-loader-animation"></div>
+  </div>
+  </ng-container>
+</ng-template>

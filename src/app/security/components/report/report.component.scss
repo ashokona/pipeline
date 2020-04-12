@@ -1,0 +1,46 @@
+@import '../../../../variables';
+
+.container {
+    width: 95vw;
+    height: 50vh;   
+    overflow: none;    
+}
+.solution { 
+  padding: 2px;
+  overflow:auto;
+}
+
+.example-container {
+    display: flex;
+    flex-direction: column;
+    max-height: 500px;
+    min-width: 300px;
+}
+  
+.mat-table {
+overflow: auto;
+max-height: 500px;
+}
+
+.mat-row.highlighted {
+  background:$cops-warn;
+  color:$cops-light;
+}
+
+.mat-button-toggle-group, .mat-button-toggle-standalone{
+  border-radius:$border-radius;
+  background: $cops-light;
+  color:$cops-primary;
+  .mat-button-toggle{
+    color:$cops-primary;
+  }
+  .mat-button-toggle:not(:last-child){
+    border-right:1px solid $cops-dull;
+  }
+  .mat-button-toggle-checked{
+    background:$cops-primary;
+    color:$cops-light;
+  }
+}
+
+// :not(:last-child)

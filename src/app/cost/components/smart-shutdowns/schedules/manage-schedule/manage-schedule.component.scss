@@ -1,0 +1,25 @@
+@import '../../../../../../variables';
+
+.create-schedule-container {
+  height: 100%;
+}
+
+:host::ng-deep {
+  .mat-accordion {
+    .mat-expansion-panel-content {
+      .mat-expansion-panel-body {
+        padding: 0px;
+      }
+    }
+  }
+}
+
+.manage-schedule-accordion .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.manage-schedule-accordion .mat-expansion-panel-header-title,
+.manage-schedule-accordion .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}

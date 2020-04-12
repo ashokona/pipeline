@@ -1,0 +1,13 @@
+<cops-secondary-nav [navItems]="inventoryTabs" [title]="title" (navItemChanged)="onNavItemChanged($event)">
+    <ng-container *ngIf="regions" secNavContent>
+      <button mat-button color="accent" (click)="onVisualization($event)">
+        <i class="material-icons md-18">cloud_queue</i>&nbsp;
+        <b>CLOUD VIEW</b></button>
+    </ng-container>
+</cops-secondary-nav>
+<!-- <i class="icon icon-aws-vpc-light icon-2x"></i> -->
+<div class="inventory-container" fxLayout="column" fxLayoutGap="20px">
+  <span copsRestrictedAccess fxFlex>
+    <router-outlet></router-outlet>
+  </span>
+</div>

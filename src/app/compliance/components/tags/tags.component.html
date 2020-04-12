@@ -1,0 +1,13 @@
+<div fxLayout="row" fxLayoutAlign="space-between center" *ngIf="!isLoading">
+  <cops-tabs [tabs]='tabs' (tabChange)="onTabChanged($event)"></cops-tabs>
+  <mat-form-field>
+    <!-- <mat-label>Favorite food</mat-label> -->
+    <mat-select [(value)]="resourceType">
+      <mat-option *ngFor="let resource of resourceTypes" [value]="resource">
+        {{resource | uppercase }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<cops-ec2-tags *ngIf="currentRoute !== 'tagConfig'"></cops-ec2-tags>
+<cops-tag-configuration [resourceType]="resourceType" *ngIf="currentRoute === 'tagConfig'"></cops-tag-configuration>

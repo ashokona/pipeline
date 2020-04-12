@@ -1,0 +1,19 @@
+<div class="d3GroupedForcedDirectedLegend" fxLayout="column">
+      <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center"
+            *ngFor="let node of nodesList">
+            <img class="label-img" [src]="icons[node.type]" />
+            <span class="app-text light-gray link" [ngClass]="node.hidden ? 'hide-node' : null"  (click)="onHideNode(node.type)">{{node.name}}</span>
+      </div>
+</div>
+<div class="d3GroupedForcedDirectedLinksLegend" fxLayout="row" fxLayoutGap="5px">
+      <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center"
+            *ngFor="let link of linksList">
+            <!-- <img class="label-img" [src]="icons[icon]" /> -->
+            <span class="link-label" [ngClass]="link.type"></span>
+            <span class="app-text light-gray link" [ngClass]="link.hidden ? 'hide-link' : null" (click)="onHideLink(link.type)">{{link.name}}</span>
+      </div>
+</div>
+<img class="vpc-icon" src="../../../../../assets/svg/aws/virtual-private-cloud-blue.svg">
+
+<div id="d3GroupedForcedDirected" #d3GroupedForcedDirected fxFlex="100%" class="d3GroupedForcedDirected full-height">
+</div>

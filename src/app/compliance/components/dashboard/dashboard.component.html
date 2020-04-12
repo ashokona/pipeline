@@ -1,0 +1,54 @@
+<div class="">
+  <div fxLayout="column wrap" fxLayoutGap="20px">
+    <div fxFlex>
+
+      <!-- <span fxLayoutAlign="end center">
+          <i class="material-icons md-24 link" matTooltip="Download Presentation" (click)="onDownload()" >
+            get_app
+          </i>
+      </span> -->
+
+    </div>
+    <div fxLayout="row">
+      <div fxFlex="auto" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="20px">
+
+        <div fxFlex="50%">
+          <mat-card class="dashcard-card-secondary" fxLayout="column">
+            <mat-card-title fxLayout="column" class="content-padding bg-primary">
+              <span class="fs-18 bold">Backup</span>
+              <!-- <span class="fs-18">{{Total}}</span> -->
+            </mat-card-title>
+            <mat-card-content fxLayout="column" class="content-padding" *copsContentState="columnChartReportState">
+              <!-- <div fxFlex="75" fxLayout="row">
+                  <div fxFlex="50" fxLayout="row" fxFill fxLayoutAlign="center center" *ngFor="let each of Region">
+                    <div fxFlex="25" fxLayout="row">
+                      <span>{{each._id}} : {{each.count}}</span>
+                    </div>
+                  </div>
+                </div> -->
+              <cops-google-chart [data]="columnChartData" [config]="columnChartConfig"
+                [elementId]="columnChartElementId" [chartType]="'column'"></cops-google-chart>
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+        <div fxFlex="50%">
+          <mat-card class="dashcard-card-secondary" fxLayout="column">
+            <mat-card-title fxLayout="column" class="content-padding bg-primary">
+              <span class="fs-18 bold">Compliance Report &nbsp;
+                <span class="fs-18" *ngIf="tagComplianceCount">
+                  ( {{tagComplianceCount}} )
+                </span>
+              </span>
+            </mat-card-title>
+            <mat-card-content fxFlex="85" class="content-padding" *copsContentState="complianceReportState">
+              <cops-google-chart [data]="complianceReportBarChartData" [chartType]="'bar'"
+                [config]="complianceReportBarChartConfig" [elementId]="complianceReportElementId">
+              </cops-google-chart>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

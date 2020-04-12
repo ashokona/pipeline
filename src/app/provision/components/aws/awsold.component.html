@@ -1,0 +1,69 @@
+<div class="container">
+    <h4 class="bold primary">CONFIGURATION</h4>
+    <mat-card class="mat-card-primay-tb">
+      <mat-card-content>
+        <form [formGroup]="genericConfigurationFormGroup" fxLayout="column" fxLayoutGap="16px">
+          <div fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="16px grid">
+            <mat-form-field fxFlex="25">
+              <mat-select placeholder="Region" formControlName="region" required>
+                <mat-option *ngFor="let region of regions" [value]="region.value">
+                  {{region.viewValue}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="16px grid">          <mat-form-field fxFlex="25">
+              <mat-select placeholder="Instance Type" formControlName="instance_type" required>
+                <mat-option *ngFor="let instance of instanceTypes" [value]="instance.value">
+                  {{instance.viewValue}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field fxFlex="25%">
+              <input matInput placeholder="VPC ID" formControlName="vpc_id" required>
+            </mat-form-field>
+            <mat-form-field fxFlex="25%">
+              <input matInput placeholder="Public Subnet Id" formControlName="public_sunet_id" required>
+            </mat-form-field>
+            <mat-form-field fxFlex="25%">
+              <input matInput placeholder="Private IP CIDR" formControlName="private_ip_cidr" required>
+            </mat-form-field>
+            <mat-form-field fxFlex="25%">
+                <input matInput placeholder="Private Subnet Id" formControlName="private_sunet_id" required>
+              </mat-form-field>
+              <mat-form-field fxFlex="25%">
+                  <input type="number" matInput placeholder="Instance Count" formControlName="instance_count" required>
+                </mat-form-field>
+            <mat-form-field fxFlex="25%">
+              <input matInput placeholder="AMI" formControlName="ami" required>
+            </mat-form-field>
+            <mat-form-field fxFlex="25">
+              <mat-select placeholder="Release Type" formControlName="release_type" required>
+                <mat-option *ngFor="let type of releaseTypes" [value]="type.value">
+                  {{type.viewValue}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div *ngIf="genericConfigurationFormGroup.value.release_type === 'canary'" fxLayout.lg="row wrap" fxLayout.md="row wrap"
+            fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="16px grid">
+            <mat-form-field fxFlex="25%">
+              <input matInput placeholder="App Name" formControlName="app_name" >
+            </mat-form-field>
+            <mat-form-field fxFlex="50%">
+              <input matInput placeholder="Git Repo" formControlName="git_repo" >
+            </mat-form-field>
+            <mat-form-field fxFlex="25%">
+              <input matInput placeholder="Load Balancer Weight" formControlName="load_balancer_weight" >
+            </mat-form-field>
+          </div>
+  
+        </form>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-button class="primary">Clear</button>
+        <button mat-raised-button color="primary" [disabled]="!this.genericConfigurationFormGroup.valid" (click)="onSubmit()">Submit</button>
+  
+      </mat-card-actions>
+    </mat-card>
+  </div>

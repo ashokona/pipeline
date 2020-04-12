@@ -1,0 +1,6 @@
+<cops-custom-nav [title]="title" [route]="parentRoute" [tabs]="securityTabs"></cops-custom-nav>
+<div class="security-container" fxLayout="column" fxLayoutGap="20px">
+  <span copsRestrictedAccess fxFlex>
+    <router-outlet></router-outlet>
+  </span>
+</div>

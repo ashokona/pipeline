@@ -1,0 +1,208 @@
+<div class="container" ng-app="myApp" ng-controller="myController">
+  <h4 class="bold primary">CONFIGURATION</h4>
+  <mat-card class="mat-card-primay-tb">
+      <h4 class="bold primary">ACCOUNT CONFIGURATION</h4>
+    <mat-card-content>
+      <form [formGroup]="genericConfigurationFormGroup" id="AWSSerializedDetails" fxLayout="column" fxLayoutGap="16px">
+        <div fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="16px grid">
+          <mat-form-field fxFlex="25">
+            <mat-select [(value)]="selectedRegion" (selectionChange)="onRegionChange()">
+              <mat-option *ngFor="let region of awsRegions" [value]="region">
+                  {{region}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field fxFlex="25%">
+            <!-- <input matInput placeholder="VPC ID" formControlName="vpc_id" required> -->
+            <mat-select placeholder="VPC ID" formControlName="vpc_id" required>
+              <mat-option *ngFor="let each of vpc" [value]="each.value">
+                {{each.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field fxFlex="25%">
+            <mat-select placeholder="Subnet Id" formControlName="sunet_id" required>
+              <mat-option *ngFor="let type of sunetId" [value]="type.value">
+                {{type.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="16px grid">
+          <h4 class="bold primary">INSTANCE CONFIGURATION</h4>
+        </div>
+        <div fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="16px grid">
+          <mat-form-field fxFlex="25">
+            <mat-select placeholder="Instance Type" formControlName="instance_type" required>
+              <mat-option *ngFor="let instance of instanceTypes" [value]="instance.value">
+                {{instance.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field fxFlex="25%">
+            <input matInput placeholder="AMI" formControlName="ami" required>
+          </mat-form-field>
+          <mat-form-field fxFlex="25%">
+            <mat-select placeholder="Security Group" formControlName="security_group" required>
+              <mat-option *ngFor="let type of securityGroup" [value]="type.value">
+                {{type.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field fxFlex="25%">
+            <input matInput placeholder="Key Pair" formControlName="key_pair" required>
+          </mat-form-field>
+          <mat-form-field fxFlex="25%">
+            <input matInput placeholder="IAM Role" formControlName="iam_role" required>
+          </mat-form-field>
+          <mat-form-field fxFlex="25%">
+            <!-- <input matInput placeholder="Environment" formControlName="environment" required> -->
+            <mat-select placeholder="Environment" formControlName="environment" required>
+              <mat-option *ngFor="let type of environment" [value]="type.value">
+                {{type.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+          <div fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="16px grid">
+              <h4 class="bold primary">Tags</h4>
+              <i class="material-icons" (click)="addItem()" title="Add More" >add_circle_outline</i>
+            <table class="example-full-width" cellspacing="0">
+              <div formArrayName="tags_name" *ngFor="let tags_name of genericConfigurationFormGroup.get('tags_name')?.controls; let i = index;">
+                <div [formGroupName]="i">
+                  <!-- <input formControlName="name" placeholder="tag name">
+                  <input formControlName="value" placeholder="tag value"> -->
+                    <tr>
+                      <td><mat-form-field class="example-full-width">
+                        <input matInput placeholder="tag name" formControlName="name" required>
+                      </mat-form-field></td>
+                      <td><mat-form-field class="example-full-width">
+                        <input matInput placeholder="Tag value" formControlName="value" required>
+                      </mat-form-field></td>
+                    </tr>
+                </div>
+                <!-- Chosen name: {{ genericConfigurationFormGroup.controls.tags_name.controls[i].controls.name.value }} -->
+              </div>
+            </table>
+          </div>
+        <div fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="16px grid">
+          <h4 class="bold primary">ELB</h4>
+          <!-- <mat-card class="result">
+            <mat-card-content>
+              <h2 class="example-h2">Result</h2>
+          
+              <section class="example-section">
+                <mat-slide-toggle>
+                  Slide me!
+                </mat-slide-toggle>
+              </section>
+            </mat-card-content>
+          </mat-card> -->
+          
+          <!-- <mat-radio-group formControlName="elb" fxLayout="row wrap" fxLayoutGap="16px grid">
+            <mat-radio-button fxFlex value="elb_yes">Yes</mat-radio-button>
+            <mat-radio-button fxFlex value="elb_no">No</mat-radio-button>
+          </mat-radio-group> -->
+          <mat-radio-group formControlName="elb" required fxLayout="row wrap" fxLayoutGap="16px grid">
+            <mat-radio-button fxFlex value="elb_existing">Existing</mat-radio-button>
+            <mat-radio-button fxFlex value="elb_new">New</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <!-- <div *ngIf="genericConfigurationFormGroup.value.elb === 'elb_yes'" fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="16px grid">
+          <mat-radio-group formControlName="elb" required fxLayout="row wrap" fxLayoutGap="16px grid">
+            <mat-radio-button fxFlex value="elb_existing">Existing</mat-radio-button>
+            <mat-radio-button fxFlex value="elb_new">New</mat-radio-button>
+          </mat-radio-group>
+        </div> -->
+        <div *ngIf="genericConfigurationFormGroup.value.elb === 'elb_existing'" fxLayout.lg="row wrap" fxLayout.md="row wrap"
+          fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="16px grid">
+          <mat-form-field fxFlex="25">
+            <mat-select placeholder="ELB Existing" formControlName="elb" required>
+              <mat-option *ngFor="let type of ELB" [value]="type.value">
+                {{type.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        
+          <!-- <mat-form-field fxFlex="25%">
+            <input matInput placeholder="Private IP CIDR" formControlName="private_ip_cidr" required>
+          </mat-form-field>
+          <mat-form-field fxFlex="25%">
+              <input matInput placeholder="Private Subnet Id" formControlName="private_subnet_id" required>
+            </mat-form-field>
+            <mat-form-field fxFlex="25%">
+                <input type="number" matInput placeholder="Instance Count" formControlName="instance_count" required>
+              </mat-form-field>
+          <mat-form-field fxFlex="25%">
+            <input matInput placeholder="AMI" formControlName="ami" required>
+          </mat-form-field> -->
+          <!-- <mat-form-field fxFlex="25">
+            <mat-select placeholder="Release Type" formControlName="release_type" required>
+              <mat-option *ngFor="let type of releaseTypes" [value]="type.value">
+                {{type.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field> -->
+        <!-- </div> -->
+        <!-- <div *ngIf="genericConfigurationFormGroup.value.release_type === 'canary'" fxLayout.lg="row wrap" fxLayout.md="row wrap"
+          fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="16px grid">
+          <mat-form-field fxFlex="25%">
+            <input matInput placeholder="App Name" formControlName="app_name" >
+          </mat-form-field>
+          <mat-form-field fxFlex="50%">
+            <input matInput placeholder="Git Repo" formControlName="git_repo" >
+          </mat-form-field>
+          <mat-form-field fxFlex="25%">
+            <input matInput placeholder="Load Balancer Weight" formControlName="load_balancer_weight" >
+          </mat-form-field>
+        </div> -->
+
+      </form>
+      <mat-card-actions align="end">
+        <button mat-raised-button color="primary" [disabled]="!this.genericConfigurationFormGroup.valid" (click)="onSubmit()">Add to stack</button>
+      </mat-card-actions>
+      </mat-card-content>
+    <mat-card class="mat-card-primay-tb">
+      <h4 class="bold primary">My Stack</h4>
+      <mat-card-content>
+          <table class="example-full-width" border="1px" cellspacing="0" style="width:100%;" ng-controller="demoCtrl">
+              <th>region</th>
+              <th>vpc_id</th>
+              <th>sunet_id</th>
+              <th>instance_type</th>
+              <th>ami</th>
+              <th>elb</th>
+              <th>environment</th>
+              <th>iam_role</th>
+              <th>key_pair</th>
+              <th>security_group</th>
+              <th>tags</th>
+
+              <tr *ngFor="let stack of myStack; let i = index">
+                <td>{{stack.region}}</td>
+                <td>{{stack.vpc_id}}</td>
+                <td>{{stack.sunet_id}}</td>
+                <td>{{stack.instance_type}}</td>
+                <td>{{stack.ami}}</td>
+                <td>{{stack.elb}}</td>
+                <td>{{stack.environment}}</td>
+                <td>{{stack.iam_role}}</td>
+                <td>{{stack.key_pair}}</td>
+                <td>{{stack.security_group}}</td>
+                <td>{{stack.tags_name}}</td>
+              </tr> 
+            </table>
+      </mat-card-content>
+    </mat-card>
+    <mat-card-actions align="end">
+      <button mat-button class="primary">Reset</button>
+      <button mat-raised-button color="primary" [disabled]="!this.genericConfigurationFormGroup.valid" >Submit</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+<script type="text/ng-template" id="form1.tpl.html">
+  <label>
+    Form one is an input: <input type="text" />
+  </label>
+</script>

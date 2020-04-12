@@ -1,0 +1,177 @@
+<div fxLayout="column" fxLayoutGap="20px">
+  <div fxLayout="row" >
+    <span fxFlex>
+      <span class="heading-primary">SECURITY INSIGHTS</span>
+    </span>
+    <span fxLayoutAlign="end center">
+      <i class="material-icons md-24 link" matTooltip="Download Presentation" (click)="onDownload()">
+        get_app
+      </i>
+    </span>
+  </div>    
+  <div fxLayout="row">
+    <span fxFlex fxLayoutAlign="start start">
+      <mat-form-field>
+        <mat-label>Complaince</mat-label>
+        <mat-select [(value)]="selectedBenchmark" (selectionChange)="onBenchmarkChange($event)">
+          <mat-option *ngFor="let benchmark of benchmarks" [value]="benchmark">
+            <div *ngFor="let name of benchmarkDisplay">
+              <p *ngIf="benchmark == name.type">
+                {{name.displayName}}
+              </p>
+            </div>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </span>
+  </div>
+  <div id="security-report-container" fxFlex="auto" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="20px">
+    <div fxFlex="33%">
+        <mat-card class="mat-card-risk-bordered">
+            <mat-card-title fxLayout="column" class="content-padding bg-primary link">
+              <span fxFlex class="fs-20 bold">Identified Risks</span>
+              <span class="fs-18"></span>
+            </mat-card-title>
+            <mat-card-content fxLayout="column" fxLayoutGap=16px *copsContentState="loadingStateCount" routerLink="/security/SecurityReports">
+              <div fxLayout="row">
+                <div fxLayout="column" fxFill>
+                <mat-card class="cops-total-card">
+                  <mat-card-content>
+                    <div fxLayout="column" fxFill>
+                      <div fxFlex="50%" fxFill>
+                        <div fxLayout="row">
+                          <div fxLayout="column" fxFlex="60" >
+                            <span class="value bold">{{Total}}</span>
+                            <span class="name">Total Identified Risks</span>
+                          </div>
+                          <div fxFlex="40" fxLayoutAlign="end start" >
+                            <button mat-button class="sm info"> <i class="material-icons md-18">
+                                sms_failed
+                              </i></button>
+                          </div>
+                        </div>
+                      </div>
+                      <div fxFlex="50%" fxLayoutAlign="start end" fxFill>
+                        <mat-progress-bar mode="determinate" class="warn" value="100"></mat-progress-bar>
+                      </div>
+                    </div>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+              </div>
+              <div fxLayout="row">
+                <div fxLayoutGap=16px fxFill>
+                    <mat-card class="cops-total-card">
+                      <mat-card-content>
+                        <div fxLayout="column" fxFill>
+                          <div fxFlex="50%" fxFill>
+                            <div fxLayout="row">
+                              <div fxLayout="column" fxFlex="60" >
+                                <span class="value bold">{{Risks.High}}</span>
+                                <span class="name">High</span>
+                              </div>
+                              <div fxFlex="40" fxLayoutAlign="end start" >
+                                <button mat-button class="sm warn"> <i class="material-icons md-18">
+                                    notification_important
+                                  </i></button>
+                              </div>
+                            </div>
+                          </div>
+                          <div fxFlex="50%" fxLayoutAlign="start end" fxFill>
+                            <mat-progress-bar mode="determinate" class="warn" value="100"></mat-progress-bar>
+                          </div>
+                        </div>
+                      </mat-card-content>
+                    </mat-card>
+                  </div>
+                </div>
+              <div fxLayout="row">
+                <div fxLayoutGap=16px fxFill>
+                  <div fxFlex="50">
+                      <mat-card class="cops-total-card">
+                        <mat-card-content>
+                          <div fxLayout="column" fxFill>
+                            <div fxFlex="50%" fxFill>
+                              <div fxLayout="row">
+                                <div fxLayout="column" fxFlex="60" >
+                                  <span class="value bold">{{Risks.Medium}}</span>
+                                  <span class="name">Medium</span>
+                                </div>
+                                <div fxFlex="40" fxLayoutAlign="end start" >
+                                  <button mat-button class="sm acent"> <i class="material-icons md-18">
+                                      warning
+                                    </i></button>
+                                </div>
+                              </div>
+                            </div>
+                            <div fxFlex="50%" fxLayoutAlign="start end" fxFill>
+                              <mat-progress-bar mode="determinate" class="acent" value="100"></mat-progress-bar>
+                            </div>
+                          </div>
+                        </mat-card-content>
+                      </mat-card>
+                    </div>
+                <div fxFlex="50">
+                  <mat-card class="cops-total-card">
+                    <mat-card-content>
+                      <div fxLayout="column" fxFill>
+                        <div fxFlex="50%" fxFill>
+                          <div fxLayout="row">
+                            <div fxLayout="column" fxFlex="60" >
+                              <span class="value bold">{{Risks.Low}}</span>
+                              <span class="name">Low</span>
+                            </div>
+                            <div fxFlex="40" fxLayoutAlign="end start" >
+                              <button mat-button class="sm accent"> <i class="material-icons md-18">
+                                  error
+                                </i></button>
+                            </div>
+                          </div>
+                        </div>
+                        <div fxFlex="50%" fxLayoutAlign="start end" fxFill>
+                          <mat-progress-bar mode="determinate" class="accent" value="100"></mat-progress-bar>
+                        </div>
+                      </div>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+              </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+    <div fxFlex="66%">
+      <mat-card class="mat-card-top-bordered" fxLayoutAlign="center none" fxLayout="column">
+            <mat-card-title fxLayout="row" fxFlex="15" routerLink="/security" class="content-padding bg-primary link">
+              <span fxFlex class="fs-20 bold">Assesment Trend</span>
+              <span fxFlex dir="rtl">
+                <i class="material-icons md-18 light link" routerLink="/security">pageview</i>
+              </span>
+            </mat-card-title>
+            <mat-card-content class="content-padding" *copsContentState="loadingState">
+              <mat-slide-toggle (change)="onToggle($event)" >Weekly</mat-slide-toggle>
+              <div fxLayout="row" fxFill>
+                <div fxFlex="50%" style="height: 375px" *copsContentState="loadingState">
+                  <cops-google-chart [data]="securitylineChartData" [config]="securitylineChartConfig" [elementId]="securitylineChartElementId" [chartType]="'line'" *ngIf="checked" ></cops-google-chart>
+
+                  <cops-google-chart [data]="monthlyBarChartData" [config]="monthlyBarChartConfig" [elementId]="monthlyBarElementId" [chartType]="'column'" *ngIf="!checked"></cops-google-chart>
+                </div>
+                <div fxLayout="column" fxFlex="50%" fxFill>
+                  <div fxFlex>
+                    <span class="heading-primary">Top Findings</span>
+                  </div>
+                  <div fxFlex>
+                    <cops-data-table 
+                    *copsLoading="isRisksLoading"
+                    (refreshClicked)="onRefreshData()"
+                    [options]="tableOptions" [data]="tableData" [columns]="displayedRiskColumns">
+                  </cops-data-table>
+                  </div>
+                </div>
+              </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+  </div>
+  <!-- </div> -->
+</div>

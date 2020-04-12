@@ -1,0 +1,64 @@
+@import '../../../variables.scss';
+
+.mat-toolbar-multiple-rows {
+  min-height: 56px;
+}
+.mat-toolbar-row, .mat-toolbar-single-row {
+  height: 56px;
+  // padding: 0 7px;
+  .megaops-logo {
+    height: 26px;
+    width:30px;
+    margin: 0 4px 3px 0;
+    cursor: pointer;
+    vertical-align: middle;
+  }
+  
+  .top-nav-spacer {
+    flex: 1 1 auto;
+  }
+  
+  .nav-search-form {
+    min-width: 100px;
+    max-width: 300px;
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .user-button{
+    // mat-button-wrapper
+    height: 32px;
+    width: 32px;
+    border: 1px solid $cops-dull;
+    background: $cops-primary;
+    line-height: 24px;
+    &::ng-deep .mat-button-wrapper{
+      padding: 0;
+    }
+  }
+  
+}
+
+.top-nav-toolbar {
+  position: fixed;
+  left: 48px;
+    width: calc(100% - 48px);
+  position: -webkit-sticky; /* For macOS/iOS Safari */
+  top: 0; /* Sets the sticky toolbar to be on top */
+  // z-index: 1000; /* Ensure that your app's content doesn't overlap the toolbar */
+}
+
+.current-user-button {
+  background-color: transparent;
+  border: 2px solid $cops-accent;
+  width: 32px;
+  height: 32px;
+  line-height: 0px;
+
+  &::ng-deep .mat-button-wrapper{
+    line-height: 12px;
+    padding: 0;
+    text-transform: uppercase;
+    color: $cops-accent
+  }
+}

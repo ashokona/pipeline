@@ -1,0 +1,46 @@
+<mat-card class="dashcard-card-primary" fxLayoutAlign="center none" fxLayout="column">
+  <ng-container>
+    <mat-card-title fxLayout="row" fxFlex="15" class="content-padding bg-primary link"
+      routerLink="/compliance/dashboard">
+      <span fxFlex="80" class="fs-20 bold">NON-COMPLIANT FINDINGS</span>
+      <span fxFlex="20" dir="rtl">
+        <i class="material-icons md-18 light link" routerLink="/compliance/dashboard">pageview</i>
+      </span>
+    </mat-card-title>
+    <mat-card-content *copsContentState="loadingState" fxFlex="85">
+      <div fxLayout="column" fxFill>
+        <div fxFlex="35%" style="padding:20px" fxFill>
+          <div fxLayout="row" fxLayoutAlign="center center">
+            <div fxLayout="row" fxFlex="50" fxLayoutAlign="center center">
+              <span class="fs-20 bold alert" style="margin: 0 16px 16px">{{ tagComplianceCount }}</span>
+              <h4>Tags</h4>
+            </div>
+            <!-- <div fxLayout="column" fxFlex="33.3" fxLayoutAlign="center center" class="compliance-card ">
+                        <span class="fs-20 bold warn">0</span>
+                        <h4>Tags</h4>
+                      </div>
+                      <div fxLayout="column" fxFlex="33.3" fxLayoutAlign="center center" class="compliance-card">
+                        <span class="fs-20 bold success">0</span>
+                        <h4>Access Reviews</h4>
+                      </div>
+                      <div fxLayout="column" fxFlex="33.3" fxLayoutAlign="center center" class="compliance-card">
+                        <span class="fs-20 bold alert">0</span>
+                        <h4>Back Up</h4>
+                      </div> -->
+          </div>
+        </div>
+        <div fxFlex="65%" fxFill>
+          <div fxLayout="row" fxLayoutAlign="center center" fxFill>
+            <div fxFlex="50" fxFill>
+              <!-- <div fxFill fxLayoutAlign="center center"> -->
+              <cops-google-chart [data]="complianceDonutChartData" [config]="complianceDonutChartConfig"
+                [elementId]="complianceDonutElementId" [chartType]="'pie'">
+              </cops-google-chart>
+              <!-- </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </ng-container>
+</mat-card>

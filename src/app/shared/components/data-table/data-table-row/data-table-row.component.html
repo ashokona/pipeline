@@ -1,0 +1,44 @@
+<span *ngIf="typeOf(rowData) === 'number'|| typeOf(rowData) === 'string'">{{rowData}}</span>
+<span *ngIf="typeOf(rowData) === 'date'">{{rowData | date}}</span>
+<span *ngIf="typeOf(rowData) === 'array'">
+  <mat-chip-list>
+    <mat-chip *ngFor="let item of rowData">{{item}}</mat-chip>
+  </mat-chip-list>
+</span>
+<span *ngIf="typeOf(rowData) === 'stringarray'">
+  <ng-container *ngIf="rowData.split(',').length > 1;else showMore">
+    <mat-chip-list>
+      <mat-chip class="chip-primary">{{rowData.split(',')[0]}}</mat-chip>
+      <i class="material-icons md-18 link" [mdePopoverTriggerFor]="appPopover"
+      mdePopoverTriggerOn="hover">more_vert</i>
+    </mat-chip-list>
+    <mde-popover #appPopover="mdePopover" [mdePopoverOverlapTrigger]="false">
+        <mat-card style="max-width: 300px">
+          <mat-card-content>
+              <ng-container *ngFor="let item of rowData.split(','); let i = index">
+                  <mat-chip-list *ngIf="i > 0">
+                      <mat-chip class="chip-primary">{{item}}</mat-chip>
+                    </mat-chip-list>
+              </ng-container>
+          </mat-card-content>
+        </mat-card>
+      </mde-popover>
+  </ng-container>
+  <ng-template #showMore>
+    <mat-chip-list>
+      <mat-chip class="chip-primary" *ngFor="let item of rowData.split(',')">{{item}}</mat-chip>
+    </mat-chip-list>
+  </ng-template>
+
+</span>
+<span *ngIf="typeOf(rowData) === 'boolean'">
+    <i class="material-icons success" *ngIf="rowData" >check_circle_outline</i>
+    <i class="material-icons warn" *ngIf="!rowData" >highlight_off</i>
+  <!-- <mat-chip-list>
+    <mat-chip *ngIf="rowData" class="chip-success">Yes</mat-chip>
+    <mat-chip *ngIf="!rowData" class="chip-warn">No</mat-chip>
+  </mat-chip-list> -->
+</span>
+<span *ngIf="typeOf(rowData) === 'object'">
+  {{rowData}}
+</span>

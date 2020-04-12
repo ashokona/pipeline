@@ -1,0 +1,26 @@
+<!-- <h1>d3</h1> -->
+<!-- <div id="d3ForcedDirected" #d3ForcedDirected (window:resize)="onResize($event)" width="960" height="600"></div> -->
+<!-- <svg  id="d3GroupClustering"
+      width="100%"
+      height="100%"
+      class="associations"
+      #d3ForcedDirected>
+</svg> -->
+<div class="d3GroupClusteringLegend" fxLayout="column">
+      <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
+            <img class="label-img" src="../../../../assets/svg/aws/Amazon-VPC.svg" />
+            <span class="app-text light-gray">VPC</span>
+      </div>
+      <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
+            <img class="label-img" src="../../../../assets/svg/aws/Application-Integration.svg" />
+            <span class="app-text light-gray">Classic Vpc</span>
+      </div>
+</div>
+<!-- <img class="vpc-icon" src="../../../../../assets/svg/aws/virtual-private-cloud.svg"> -->
+
+<div class="d3GroupClustering" fxFlex="100%" id="d3GroupClustering" #d3GroupClustering (window:resize)="onResize($event)"></div>
+<!-- <ng-template *ngIf="!data">
+      <div class="d3GroupClusteringEmptyState" fxFlex fxLayoutAlign="center center" fxFlex="100%" >
+            <span>No VPC's found</span>
+      </div>
+</ng-template> -->

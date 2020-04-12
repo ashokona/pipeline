@@ -1,0 +1,186 @@
+<!-- <br> -->
+<div *ngIf="dataSource" fxLayout="row" fxLayoutGap="30px" class="full-width">
+    <mat-form-field class="full-width">
+      <!-- <mat-chip-list #chipList aria-label="filter selection">
+        <mat-chip *ngFor="let filter of listFilters" [selectable]="selectable"
+                 [removable]="removable" (removed)="remove(filter)">
+          {{filter}}
+          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+        </mat-chip>
+        <input placeholder="New filter..."
+               [matChipInputFor]="chipList"
+               [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+               [matChipInputAddOnBlur]="addOnBlur"
+               (keydown)="onSearch($event)"
+               (matChipInputTokenEnd)="add($event)">
+      </mat-chip-list> -->
+      <mat-label>Search</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="">
+    </mat-form-field>
+  <div class="legend" fxLayout="row-reverse" fxLayoutGap="10px" *ngIf="columnsData['Actions']">
+    <ng-container *ngFor="let column of columnsData['Actions']">
+      <span fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px" class="link" (click)="onSortList(column.columnId)">
+        <i class="material-icons md-18">{{column.icon}}</i>
+        <span class="gray italic">
+          {{column.name || column.columnId}}
+        </span>
+        <i *ngIf="sortKey && sortKey === column.columnId" class="material-icons md-16 gray" >
+          <ng-container *ngIf="!sortAsc">arrow_upward</ng-container>
+          <ng-container *ngIf="sortAsc">arrow_downward</ng-container>
+        </i>
+      </span>
+    </ng-container>
+  </div>
+</div>
+<ng-container *ngIf="!isLoading; else loadingState">
+  <div class="list-item" *ngIf="dataSource && dataSource.length > 0; else emptyState">
+
+
+    <mat-accordion fxLayout="column" fxLayoutGap="10px">
+      <mat-expansion-panel disabled="true">
+        <mat-expansion-panel-header class="list-header">
+          <div fxFill="100" fxLayout.sm="column" fxLayout.xs="column" fxLayout="row" fxLayoutAlign="space-between center"
+            fxLayoutGap="10px">
+            <ng-container *ngFor="let column of displayedColumns">
+              <ng-container *ngIf="columnsData[column] && column === 'Actions'  ; else otherColumn">
+                <span
+                  fxFlex.sm="100" fxFlex.xs="100" [fxFlex]="100 / displayedColumns.length"
+                  class="ow-break-word"></span>
+              </ng-container>
+              <ng-template #otherColumn>
+                <span fxFlex.sm="100" fxFlex.xs="100" [fxFlex]="100 / displayedColumns.length"
+                  class="ow-break-word link"
+                  (click)="onSortList(column)">
+                  {{this.columnsData[column].name || column}} 
+                  <i *ngIf="sortKey && sortKey === column" class="material-icons md-18" >
+                    <ng-container *ngIf="!sortAsc">arrow_upward</ng-container>
+                    <ng-container *ngIf="sortAsc">arrow_downward</ng-container>
+                  </i>
+                </span>
+              </ng-template>
+            </ng-container>
+          </div>
+        </mat-expansion-panel-header>
+
+      </mat-expansion-panel>
+      <ng-container *ngFor="let item of dataSource">
+        <mat-expansion-panel (opened)="onItemClick(item)" class="full-height"
+          [expanded]="linkDetails && item[linkDetails.key] === selectedItem[linkDetails.key]">
+          <mat-expansion-panel-header>
+            <div fxFill="100" fxLayout.sm="column" fxLayout.xs="column" fxLayout="row" fxLayoutAlign="space-between center"
+              fxLayoutGap="10px">
+              <ng-container *ngFor="let column of displayedColumns">
+                <ng-container *ngIf="columnsData[column] && column === 'Actions' ; else otherContent">
+                  <span fxFlex.sm="100" fxFlex.xs="100" fxLayoutGap="5px" [fxFlex]="100 / displayedColumns.length" class="ow-break-word">
+                    <ng-container *ngFor="let action of columnsData[column]">
+                      <!-- <span class="primary">i</span> -->
+                      <i *ngIf="action.type === 'boolean'" class="material-icons md-18" [ngClass]="item[action.columnId] ? 'warn': 'success'">{{action.icon}}</i>
+                      <i *ngIf="action.type !== 'boolean'"class="material-icons md-18" [ngClass]="item[action.columnId] ? item[action.columnId]: 'hidden'">{{action.icon}}</i>
+                    </ng-container>
+                  </span>
+                </ng-container>
+                <!-- <ng-container *ngIf="columnsData[column] && columnsData[column]['isIcon'] ; else otherContent">
+                  <span fxFlex.sm="100" fxFlex.xs="100" [fxFlex]="columnsData[column]['flexWidth'] || 100 / displayedColumns.length">
+                    <ng-container *ngIf="columnsData[column]['type'] && columnsData[column]['type'] === 'boolean'; else otherIcons">
+                      <i class="material-icons md-18" [ngClass]="item[column] ? 'warn': 'success'">{{columnsData[column]['iconName']}}</i>
+                    </ng-container>
+                    <ng-template #otherIcons>
+                      <i class="material-icons md-18" [ngClass]="item[column] ? item[column]: 'hidden'">{{columnsData[column]['iconName']}}</i>
+                    </ng-template>
+                  </span>
+                </ng-container> -->
+                <ng-template #otherContent>
+                  <span fxFlex.sm="100" fxFlex.xs="100" [fxFlex]="100 / displayedColumns.length" *ngIf="isDate(item[column])" class="ow-break-word">{{item[column] | date}}</span>
+                  <span fxFlex.sm="100" fxFlex.xs="100" [fxFlex]="100 / displayedColumns.length" *ngIf="!isDate(item[column])" class="ow-break-word">{{item[column]}}</span>
+                  <!-- <span fxFlex.sm="100" fxFlex.xs="100" [fxFlex]="100 / displayedColumns.length">{{item[column]}}</span> -->
+                </ng-template>
+              </ng-container>
+            </div>
+          </mat-expansion-panel-header>
+          <mat-divider></mat-divider>
+          <div *ngIf="viewDetailsItem === item" fxLayout.sm="column" fxLayout.xs="column" fxLayout="row wrap"
+            fxFlex="100" fxLayoutAlign.sm="center center" fxLayoutAlign.xs="center center" fxLayoutAlign="center">
+            <ng-container *ngFor="let keyValue of item | keyValue">
+              <p fxFlex="50" fxLayout="row" fxLayoutAlign="center" fxLayoutGap="20px"
+                *ngIf="fieldsToSkip.indexOf(keyValue.key) < 0 && keyValue.type !== 'object'">
+                <span fxFlex="40" fxLayoutAlign="end center" class="bold ow-break-word">{{keyValue.key}}</span>
+                <span fxFlex="60" fxLayoutGap="10px" class="show-on-hover ow-break-word">
+                  <ng-container [ngSwitch]="keyValue.type">
+                    <span *ngSwitchCase="'undefined'">-</span>
+                    <span *ngSwitchCase="'string'">
+                      <span
+                        [ngClass]="{'custom-link-': columnsData[keyValue.key] ? columnsData[keyValue.key]?.isLink : false }"
+                        (click)="(columnsData[keyValue.key] && columnsData[keyValue.key]?.isLink) ? onLinkClick(keyValue.key, keyValue.value) : null">{{keyValue.value}}</span>
+                    </span>
+                    <span *ngSwitchCase="'number'">
+                      <span
+                        [ngClass]="{'custom-link-': columnsData[keyValue.key] ? columnsData[keyValue.key]?.isLink : false }"
+                        (click)="(columnsData[keyValue.key] && columnsData[keyValue.key]?.isLink) ? onLinkClick(keyValue.key, keyValue.value) : null">{{keyValue.value}}</span>
+                    </span>
+                    <span *ngSwitchCase="'array'">
+                      {{keyValue.value.length}}
+                      <ng-container *ngIf="keyValue.value.length > 0 && keyValue.key === 'Tags' || keyValue.key === 'securityFindings'" [ngTemplateOutlet]="arrayDetails" [ngTemplateOutletContext]="{link:keyValue.value}">
+                      </ng-container>
+                    </span>
+                    <span *ngSwitchCase="'date'">
+                      <span>{{keyValue.value | date}}</span>
+                    </span>
+                    <span *ngSwitchDefault>{{keyValue.value}}</span>
+                  </ng-container>
+                  <i [copyClipboard]="keyValue.value" *ngIf="keyValue.type !== 'array'"
+                    class="material-icons md-16 link">file_copy</i>
+                </span>
+              </p>
+            </ng-container>
+          </div>
+        </mat-expansion-panel>
+      </ng-container>
+    </mat-accordion>
+    <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
+    <mat-paginator #paginator [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true"
+      [length]="totalSize" [pageIndex]="currentPage" (page)="pageEvent = handlePage($event)">
+    </mat-paginator>
+  </div>
+  <!-- <mat-paginator #paginator [length]="length"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="pageSizeOptions"
+  (page)="pageEvent = $event">
+</mat-paginator> -->
+
+</ng-container>
+
+<ng-template #emptyState>
+  <div class="full-height" fxLayout="column" fxLayoutAlign="center center">
+    <i class="material-icons md-48 gray">
+      inbox
+    </i>
+    <p class="light-gray">No data found</p>
+  </div>
+</ng-template>
+<ng-template #loadingState>
+  <div class="full-height" fxLayout="column" fxLayoutAlign="center center">
+    <mat-spinner [diameter]="50"></mat-spinner>
+  </div>
+</ng-template>
+
+<ng-template #arrayDetails let-link='link'>
+  <i class="material-icons md-16 link" mdePopoverTriggerOn="click" [mdePopoverTriggerFor]="confirmIntegrationPopover">
+    info
+  </i>
+  <mde-popover #confirmIntegrationPopover="mdePopover" [mdePopoverOverlapTrigger]="false">
+    <mat-card style="max-width: 500px; border:1px solid">
+      <mat-card-content fxLayout="column" fxLayoutGap="10px">
+        <div *ngFor="let value of link" fxFlex fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+          <ng-container *ngFor="let v of value| keyValue" >
+            <span fxFlex  [ngClass]="{'bolder': v.key === 'key'}">{{v.value}}</span>
+          </ng-container>
+        </div>
+      </mat-card-content>
+      <!-- <mat-card-actions align="end">
+            <button mat-button color="warn" class="mat-button-round">Nope</button>
+            <button mat-button class="mat-button-round" mat-raised-button color="primary"
+              (click)="onConfigureAccount()">Yes</button>
+          </mat-card-actions> -->
+    </mat-card>
+  </mde-popover>
+</ng-template>

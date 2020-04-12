@@ -1,0 +1,32 @@
+<div fxLayout="column" fxLayoutGap="20px">
+  <span fxFlex>
+    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+      <span fxFlex>
+        <span class="heading-primary">Audit Trail </span>
+      </span>
+      <span fxFlex fxLayoutAlign="end center" >
+        <mat-button-toggle-group appearance="legacy" [(ngModel)]="selectedResorceType" (ngModelChange)="onResourceToggle(selectedResorceType)" name="fontStyle" aria-label="Font Style">
+          <mat-button-toggle value="unusedResources">Unused Resources ({{ totalCount }})</mat-button-toggle>
+          <mat-button-toggle value="smartShutdowns">Smart Shutdowns (0)</mat-button-toggle>          
+          <mat-button-toggle value="rightSize">Right Size (0)</mat-button-toggle>
+          <mat-button-toggle value="reservedInstances">Reserved Instances (0)</mat-button-toggle>
+        </mat-button-toggle-group>
+
+        <!-- <mat-form-field>
+          <mat-select placeholder="Select Resource" (selectionChange)="onResourceSelectionChanged($event)" formControlName="selectedResourceType">
+            <mat-option value="unusedResources"> Unused Resources ({{ totalCount }}) </mat-option>
+            <mat-option value="smartShutdowns"> Smart Shutdowns (0) </mat-option>
+            <mat-option value="rightSize"> Right Size (0) </mat-option>
+            <mat-option value="reservedInstances"> Reserved Instances (0) </mat-option>
+          </mat-select>
+        </mat-form-field> -->
+      </span>
+    </div>
+  </span>
+  <span fxFlex>
+    <cops-data-table 
+      (refreshClicked)="onRefreshData()"
+      (deleteClicked)="onDelteData($event)"
+      [options]="tableOptions" [data]="tableData" [columns]="displayedColumns"></cops-data-table>
+  </span>
+</div>

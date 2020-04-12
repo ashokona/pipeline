@@ -1,0 +1,76 @@
+<mat-card class="login-card" fxLayoutGap="20px">
+  <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+    <img alt="Mega Ops" class="megaops-logo" src="../../../assets/img/logo.png">
+    <div *ngIf="!cantAccess; else cantAccessTitle" fxLayout="column" fxLayoutGap="5px">
+      <span class="fs-18 bold">Sign into Cloud COpS</span>
+    </div>
+  </div>
+  <!-- <form class="login-form" [formGroup]="signinForm" (keyup.enter)="(!signinForm.valid || isSigninLoading) ? null : onSignin()" (ngSubmit)="(!signinForm.valid || isSigninLoading) ? null : onSignin()"> -->
+  <form *ngIf="!cantAccess; else cantAccessContainer" class="login-form" [formGroup]="signinForm"
+    (ngSubmit)="(!signinForm.valid || isSigninLoading) ? null : onSignin()">
+
+    <mat-card-content>
+      <mat-form-field class="full-width" color="primary">
+        <input matInput type="email" placeholder="Email" formControlName="email">
+        <mat-error *ngIf="signinForm.controls['email'].errors && signinForm.controls['email'].errors.email">
+          Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="signinForm.controls['email'].errors && signinForm.controls['email'].errors.required">
+          Email is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width" color="primary">
+        <input matInput type="password" placeholder="Password" formControlName="password">
+        <mat-error *ngIf="signinForm.controls['password'].errors && signinForm.controls['password'].errors.required">
+          Password is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </mat-card-content>
+    <div fxLayout="column" class="login-card-action" fxLayoutAlign="space-between stretch">
+      <button mat-raised-button type="submit" color="primary" class="sign-in-button"
+        [copsButtonLoading]="isSigninLoading">Sign In</button>
+      <a mat-button (click)="!isSigninLoading ? (cantAccess = !cantAccess) : null">Cant access?</a>
+      <!-- <mat-divider></mat-divider> -->
+      <span class="fs-14 gray signup-link">Don't have an account
+        <a color="primary" class="fs-14 dark" (click)="!isSigninLoading ? onSignUp() : null">Sign
+          Up</a>
+      </span>
+    </div>
+  </form>
+</mat-card>
+
+<ng-template #cantAccessContainer>
+  <form class="login-form" [formGroup]="cantAccessForm"
+    (ngSubmit)="(!cantAccessForm.valid || isCantAccessLoading) ? null : onCantAccess()">
+    <mat-card-content>
+      <mat-form-field class="full-width">
+        <mat-label></mat-label>
+        <mat-select formControlName="cantAccess" (selectionChange)="onCantAccessChanged()">
+          <mat-option value="forgotPassword">Forgot password</mat-option>
+          <mat-option value="sendVerifyEmail">Verify email</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="full-width" color="primary">
+        <input matInput type="email" placeholder="Email" formControlName="email" required>
+        <mat-error *ngIf="cantAccessForm.controls['email'].errors && cantAccessForm.controls['email'].errors.email">
+          Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="cantAccessForm.controls['email'].errors && cantAccessForm.controls['email'].errors.required">
+          Email is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </mat-card-content>
+    <div fxLayout="column" class="login-card-action" fxLayoutAlign="space-between stretch">
+      <button mat-raised-button color="primary" class="sign-in-button" type="submit"
+        [copsButtonLoading]="isCantAccessLoading">{{cantAccessContent}}</button>
+      <span class="fs-14 gray signup-link">Want to try
+        <a color="primary" class="fs-14 dark" (click)="!isCantAccessLoading ? (cantAccess = !cantAccess) : null">Signing In</a>
+      </span>
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #cantAccessTitle>
+  <span class="fs-18">Having trouble</span>
+  <p>to access Cloud COpS</p>
+</ng-template>

@@ -1,0 +1,17 @@
+.block-loader {
+    background: transparent;
+    height: 100%;
+    .loader-header {
+        background: lightgray;
+        border-radius: 4px;
+        width: 30%;
+        max-height: 25px !important;
+    }
+    .loader-content {
+        background: lightgray;
+        border-radius: 4px;
+        width: 80%;
+        max-height: 75px !important;
+    }
+}
+  

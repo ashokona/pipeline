@@ -1,0 +1,44 @@
+<mat-card class="dashcard-card-primary" fxLayoutAlign="center none" fxLayout="column">
+  <mat-card-title fxLayout="row" fxFlex="15" class="content-padding bg-primary link" routerLink="/cost/spends">
+    <span fxFlex class="fs-20 bold">SPEND REPORT</span>
+    <span fxFlex dir="rtl">
+      <i class="material-icons md-18 light link" routerLink="/cost/spends">pageview</i>
+    </span>
+  </mat-card-title>
+  <mat-card-content *copsContentState="loadingState" fxFlex="85">
+    <div fxLayout="column" fxFill>
+      <div fxFlex="75%" fxFill>
+        <div fxFill>
+          <cops-google-chart [data]="areaChartData" [config]="areaChartConfig" [elementId]="areaElementId"
+            [chartType]="'area'"></cops-google-chart>
+        </div>
+      </div>
+      <div fxFlex="25%" fxFill>
+        <div fxLayout="row wrap" fxLayoutAlign="center center" fxFill>
+          <div fxFlex="50" fxLayout="column" fxLayoutAlign="center center" class="border-right-primary">
+            <!-- <button mat-button class="sm warn"> <i class="material-icons md-18">
+                      expand_less
+                    </i> 2.3%</button>
+                  <span class="fs-16 primary">Spend Trend</span> -->
+            <button mat-button class="sm warn">$ {{currentSpend}}</button>
+            <span class="fs-18 primary">Current Spend</span>
+          </div>
+          <!-- <div fxFlex="33%" fxLayout="column" fxLayoutAlign="center center">
+                  <button mat-button class="sm warn"> <i class="material-icons md-18">
+                      expand_more
+                    </i> 2.3%</button>
+                  <span class="fs-16 primary">Unused Cleanup</span>
+                </div> -->
+          <div fxFlex="50" fxLayout="column" fxLayoutAlign="center center">
+            <!-- <button mat-button class="sm success"> <i class="material-icons md-18">
+                      expand_more
+                    </i> 2.3%</button>
+                  <span class="fs-16 primary">Savings Trend</span> -->
+            <button mat-button class="sm success">$ {{savingsOpportunity}}</button>
+            <span class="fs-18 primary">After Savings</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

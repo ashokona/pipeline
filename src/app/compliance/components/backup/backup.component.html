@@ -1,0 +1,62 @@
+<div fxLayout="column wrap" fxLayoutGap="20px">
+  <cops-tabs [tabs]='tabs' (tabChange)="onTabChanged($event)" [selectedIndex]="selectedTabIndex"></cops-tabs>
+</div>
+<br>
+<ng-container *ngIf="!isConfing">
+  <div fxLayout="row">
+    <div fxFlex="auto" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="20px">
+      <!-- <div fxFlex="33%">
+              <mat-card class="mat-card-top-bordered">
+                <mat-card-title fxLayout="column">
+                  <span class="fs-18 primary bold">EC2</span>
+                  <span class="fs-18">{{Total}}</span>
+                </mat-card-title>
+                <mat-card-content fxLayout="column">
+                  <cops-google-chart [data]="columnChartData" [config]="columnChartConfig" [elementId]="columnChartElementId" [chartType]="'column'"></cops-google-chart>
+                </mat-card-content>
+              </mat-card>
+            </div> -->
+      <!-- <div fxFlex="33%">
+          <mat-card class="mat-card-top-bordered">
+            <mat-card-title fxLayout="column">
+              <span class="fs-18 primary bold">RDS</span>
+              <span class="fs-18">{{Total}}</span>
+            </mat-card-title>
+            <mat-card-content fxLayout="column">
+              <cops-google-chart [data]="columnChartData2" [config]="columnChartConfig2" [elementId]="columnChartElementId2" [chartType]="'column'"></cops-google-chart>
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+
+        <div fxFlex="33%">
+            <mat-card class="mat-card-risk-bordered">
+                <mat-card-title fxLayout="column">
+                  <span class="fs-18 primary bold">Non Backed Resources</span> 
+                  <span class="fs-18"></span>
+                </mat-card-title>
+                <mat-card-content fxLayout="column" fxLayoutGap=16px>
+                </mat-card-content>
+              </mat-card>
+        </div> -->
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="!isConfing">
+  <mat-card class="mat-card-risk-bordered" fxLayoutGap=20px>
+    <mat-card-title fxLayout="column">
+      <span class="fs-18 primary bold">CALENDAR</span>
+    </mat-card-title>
+    <mat-card-content>
+      <full-calendar defaultView="dayGridMonth" [plugins]="calendarPlugins" [weekends]="true" [events]="calendarEvents"
+        *ngIf="!loading"></full-calendar>
+    </mat-card-content>
+  </mat-card>
+</ng-container>
+
+<!-- <cops-full-calendar></cops-full-calendar> -->
+<!-- <cops-calendar></cops-calendar> -->
+
+<ng-container *ngIf="isConfing">
+  <cops-config></cops-config>
+</ng-container>

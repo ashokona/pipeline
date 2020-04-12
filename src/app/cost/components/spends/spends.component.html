@@ -1,0 +1,136 @@
+<div fxLayout="row" fxLayoutAlign="space-between center">
+  <span class="fs-18 heading-primary">SPEND INSIGHTS</span>
+  <!-- <span>
+    <i class="material-icons md-24 link" matTooltip="Download Presentation" (click)="onDownload()">
+      get_app
+    </i>
+  </span> -->
+  <button mat-stroked-button class="mat-button-round" color="primary" (click)="onDownload()">
+    <i class="material-icons md-24 link" matTooltip="Download Presentation" >
+      get_app
+    </i>
+    Capture Report</button>
+</div>
+<br>
+<div id="spends-container">
+  <div fxLayout="column wrap" fxLayoutGap="20px">
+    <div fxFlex="auto" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="20px">
+      <div fxFlex="40%">
+        <mat-card class="dashcard-card-secondary" fxLayout="column">
+          <mat-card-title fxLayout="column" class="content-padding bg-primary">
+            <span class="fs-18 bold">RESOURCE WISE SPEND &nbsp;<span class="fs-18" *ngIf="totalResourceWiseSpend"> ${{ totalResourceWiseSpend }}</span></span>
+            <!-- <span class="fs-18 primary bold">Total Monthly Spend</span> -->
+          </mat-card-title>
+          <mat-card-content fxFlex="85" *copsContentState="resourceSpendState">
+              <cops-google-chart [data]="spendsBarChartData" [config]="spendsBarChartConfig" [elementId]="spendsBarElementId" [chartType]="'bar'"></cops-google-chart>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div fxFlex="60%">
+        <mat-card class="dashcard-card-secondary" fxLayout="column">
+          <mat-card-title fxLayout="column" class="content-padding bg-primary">
+            <span class="fs-18 bold">REGION WISE SPEND &nbsp;<span class="fs-18" *ngIf="totalResionWiseSpend"> ${{ totalResionWiseSpend }}</span></span>
+          </mat-card-title>
+          <mat-card-content fxFlex="85" fxLayout="column" *copsContentState="regionSpendState">
+            <!-- <div fxFlex="100" fxFill *ngIf="d3MapData"> -->
+              <cops-d3-map fxFlex="100" *ngIf="d3MapData" fxFill [appcomponentdata]="d3MapData"></cops-d3-map>
+              <!-- <cops-google-chart [data]="geoChartData" [config]="geoChartConfig" [elementId]="geoChartElementId" [chartType]="'geo'"></cops-google-chart> -->
+            <!-- </div> -->
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+    <div fxFlex="auto" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="20px">
+      <div fxFlex="40%">
+        <mat-card class="dashcard-card-secondary" fxLayout="column">
+          <mat-card-title fxLayout="column" class="content-padding bg-primary">
+            <span class="fs-18 bold">SPEND TREND &nbsp;</span>
+            <!-- <span class="fs-18 primary bold">Total Monthly Spend</span> -->
+          </mat-card-title>
+          <mat-card-content fxFlex="85" *copsContentState="resourceSpendState">
+            <cops-google-chart [data]="barChartData" [config]="barChartConfig" [elementId]="barChartElementId" [chartType]="barChartType"></cops-google-chart>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div fxFlex="60%">
+        <mat-card class="dashcard-card-secondary" fxLayout="column">
+          <mat-card-title fxLayout="column" class="content-padding bg-primary">
+            <span class="fs-18 bold">SMART SHUTDOWN</span>
+          </mat-card-title>
+          <mat-card-content fxFlex="85" *copsContentState="resourceSpendState">
+            <cops-google-chart [data]="graphChartData" [config]="graphChartConfig" [elementId]="graphChartElementId" [chartType]="graphChartType"></cops-google-chart>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+    <!-- <div fxFlex="auto" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="20px">
+      <div fxFlex="33">
+        <mat-card class="mat-card-top-bordered">
+          <mat-card-title fxLayout="column">
+            <span class="fs-18 primary bold">Smart Shutdowns</span>
+          </mat-card-title>
+          <mat-card-content fxLayout="column">
+            <div fxFlex="25" fxLayout="column">
+              <div fxFlex="50" fxLayout="row" fxFill fxLayoutAlign="center center">
+                <div fxFlex=50 fxLayout="column" fxFill fxLayoutAlign="center center">
+                  <span> Savings</span>
+                  <span> 7</span>
+                </div>
+                <div fxFlex="75" fxLayout="column" fxFill fxLayoutAlign="center center">
+                  <span> Instances </span>
+                  <span> 135</span>
+                </div>
+              </div>
+            </div>
+            <div fxFlex="70" fxFill>
+              <cops-google-chart [data]="lineChartData" [config]="lineChartConfig" [elementId]="lineChartElementId" [chartType]="'line'"></cops-google-chart>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+      </div>
+      <div fxFlex="33">
+        <mat-card class="mat-card-top-bordered" copsUnderDev>
+          <mat-card-title fxLayout="column">
+            <span class="fs-18 primary bold">Reserved Instances</span>
+            <span class="fs-18">123</span>
+          </mat-card-title>
+          <mat-card-content>
+            <cops-google-chart [data]="columnChartData" [config]="columnChartConfig" [elementId]="columnChartElementId" [chartType]="'column'"></cops-google-chart>
+          </mat-card-content>
+        </mat-card>
+
+      </div>
+      <div fxFlex="33">
+        <mat-card class="mat-card-top-bordered" copsUnderDev>
+          <mat-card-title fxLayout="column">
+            <span class="fs-18 primary bold">Right Size</span>
+          </mat-card-title>
+          <mat-card-content fxLayout="column" fxLayoutGap=16px>
+            <div fxFlex="30" fxLayout="column" fxFill>
+              <div fxFlex="50" fxLayout="row" fxFill fxLayoutAlign="center center">
+                <div fxFlex=50 fxLayout="column" fxFill fxLayoutAlign="center center">
+                  <span> Current </span>
+                  <span> 123</span>
+                </div>
+                <div fxFlex="50" fxLayout="column" fxFill fxLayoutAlign="center center">
+                  <span> Opportunity </span>
+                  <span> 123</span>
+                </div>
+              </div>
+            </div>
+            <div fxFlex="70" fxFill>
+              <cops-google-chart [data]="columnChartData2" [config]="columnChartConfig2" [elementId]="columnChartElementId2" [chartType]="'column'"></cops-google-chart>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div> -->
+  </div>
+</div>
+<br>
+<!-- <div id="container">
+  <div fxLayout="column wrap" fxLayoutGap="20px">
+
+  </div>
+</div> -->

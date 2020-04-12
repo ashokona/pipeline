@@ -1,0 +1,203 @@
+<div class="container">
+
+  <mat-horizontal-stepper [linear]="isLinear" #stepper>
+    <mat-step [stepControl]="serviceFormGroup">
+      <form fxLayout="column" fxLayoutGap="16px" [formGroup]="serviceFormGroup">
+        <div>
+          <ng-template matStepLabel>Service</ng-template>
+        </div>
+        <div>
+          <mat-radio-group formControlName="serviceName" required fxLayout="row wrap" fxLayoutGap="16px grid">
+            <mat-radio-button fxFlex value="server">Sever</mat-radio-button>
+            <mat-radio-button fxFlex value="loadbalancer">Load Balancer</mat-radio-button>
+            <mat-radio-button fxFlex value="storage">Storage</mat-radio-button>
+            <mat-radio-button fxFlex value="dns">DNS</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div fxLayoutAlign="end center">
+          <button mat-raised-button color="primary" (click)="onServiceSelect()" matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="configurationFormGroup">
+      <form [formGroup]="configurationFormGroup" fxLayout="column" fxLayoutGap="16px">
+        <div>
+          <ng-template matStepLabel>{{ serviceFormGroup.value.serviceName }} Configuration</ng-template>
+        </div>
+        <div fxLayout="row wrap" fxLayoutGap="16px grid">
+          <ng-container *ngIf="serviceFormGroup.value.serviceName === 'server'">
+            <mat-form-field fxFlex="25%">
+              <input matInput placeholder="Name" formControlName="name" required>
+            </mat-form-field>
+            <mat-form-field fxFlex="25%">
+              <input matInput placeholder="Environment" formControlName="environment" required>
+            </mat-form-field>
+            <mat-form-field fxFlex="25%">
+              <input matInput placeholder="Sevice Type" formControlName="seviceType" required>
+            </mat-form-field>
+            <mat-form-field fxFlex="25%">
+              <input matInput placeholder="CPU Cores" formControlName="cpuCores" required>
+            </mat-form-field>
+            <mat-form-field fxFlex="25%">
+              <input matInput placeholder="Memory" formControlName="memory" required>
+            </mat-form-field>
+            <mat-form-field fxFlex="25%">
+              <input matInput placeholder="Root Volumne" formControlName="rootVolumne" required>
+            </mat-form-field>
+            <mat-form-field fxFlex="25%">
+              <input matInput placeholder="Operating System" formControlName="os" required>
+            </mat-form-field>
+          </ng-container>
+          <ng-container *ngIf="serviceFormGroup.value.serviceName === 'loadbalancer'">
+            <mat-form-field fxFlex="25%">
+              <input matInput placeholder="Name" formControlName="name" required>
+            </mat-form-field>
+            <mat-form-field fxFlex="25%">
+              <input matInput placeholder="Environment" formControlName="environment" required>
+            </mat-form-field>
+            <mat-form-field fxFlex="25%">
+              <input matInput placeholder="Sevice Type" formControlName="seviceType" required>
+            </mat-form-field>
+            <mat-form-field fxFlex="25%">
+              <input matInput placeholder="CPU Cores" formControlName="cpuCores" required>
+            </mat-form-field>
+            <mat-form-field fxFlex="25%">
+              <input matInput placeholder="Memory" formControlName="memory" required>
+            </mat-form-field>
+            <mat-form-field fxFlex="25%">
+              <input matInput placeholder="Root Volumne" formControlName="rootVolumne" required>
+            </mat-form-field>
+            <mat-form-field fxFlex="25%">
+              <input matInput placeholder="Operating System" formControlName="os" required>
+            </mat-form-field>
+          </ng-container>
+          <ng-container *ngIf="serviceFormGroup.value.serviceName === 'storage'">
+            <h1>Under Development</h1>
+          </ng-container>
+          <ng-container *ngIf="serviceFormGroup.value.serviceName === 'dns'">
+            <h1>Under Development</h1>
+          </ng-container>
+        </div>
+        <div fxLayout="row">
+          <div fxFlex>
+            <button mat-stroked-button color="primary" matStepperPrevious>Back</button>
+          </div>
+          <div fxFlex fxLayoutAlign="end" fxLayoutGap="16px">
+            <button mat-raised-button color="primary" matStepperNext (click)="onServiceProvider('aws')">AWS</button>
+            <button mat-raised-button color="primary" matStepperNext (click)="onServiceProvider('azure')">AZURE</button>
+          </div>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="serviceProviderFormGroup">
+      <form [formGroup]="serviceProviderFormGroup" fxLayout="column" fxLayoutGap="16px">
+        <div>
+          <ng-template matStepLabel>{{ serviceProvider | uppercase }} Configuration</ng-template>
+        </div>
+        <div fxLayout="row wrap" fxLayoutGap="16px grid">
+          <mat-form-field fxFlex="25%">
+            <input matInput placeholder="Region" formControlName="region" required>
+          </mat-form-field>
+          <mat-form-field fxFlex="25%">
+            <input matInput placeholder="Account Number" formControlName="AccountId" required>
+          </mat-form-field>
+          <mat-form-field fxFlex="25%">
+            <input matInput placeholder="VPC" formControlName="vpc" required>
+          </mat-form-field>
+          <mat-form-field fxFlex="25%">
+            <input matInput placeholder="Subnet Id" formControlName="subnetId" required>
+          </mat-form-field>
+          <mat-form-field fxFlex="25%">
+            <input matInput placeholder="Security Group" formControlName="securityGroup" required>
+          </mat-form-field>
+          <mat-form-field fxFlex="25%">
+            <input matInput placeholder="Deployment Strategy" formControlName="deploymentStrategy" required>
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      You are now done.
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- <div class="container">
+  <div fxLayout="column" fxLayoutGap="16px">
+    <div fxFlex>
+      <div fxLayout="row" fxFill>
+        <div fxFlex fxLayoutAlign="start center">
+          <span class="fs-18">CONFIGURATION</span>
+        </div>
+        <div fxFlex fxLayoutAlign="end center">
+          <button mat-raised-button color="primary">Get Quotation</button>
+        </div>
+      </div>
+    </div>
+    <div fxFlex>
+      <mat-card class="mat-card-top-bordered">
+
+        <mat-card-content fxLayout="column">
+          <div fxLayout="row" fxLayoutGap="16px">
+            <mat-form-field fxFlex="25">
+              <input matInput placeholder="Nuber of CPU Cores" type="number">
+
+            </mat-form-field>
+            <mat-form-field fxFlex="25">
+              <mat-select placeholder="Select OS">
+                <mat-option *ngFor="let food of foods" [value]="food.value">
+                  {{food.viewValue}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field fxFlex="25">
+              <input matInput placeholder="Memory" type="number">
+              <span matSuffix class="primary">GB</span>
+            </mat-form-field>
+            <mat-form-field fxFlex="25">
+              <input matInput placeholder="Storage" type="number">
+
+              <span matSuffix class="primary">GB</span>
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div fxFlex fxLayout="row" fxLayoutGap="16px">
+      <mat-card fxFlex="50" fxLayout="row" fxLayoutGap="16px" class="cloud-service-card">
+        <span fxFlex="50" fxLayoutAlign="center center">
+          <img src="../../../../../../assets/img/aws.png" height="60%" width="80%">
+        </span>
+        <span fxFlex="50" fxLayoutAlign="center center">
+          <span class="fs-32 primary">$ 3235</span>
+        </span>
+      </mat-card>
+      <mat-card fxFlex="50" fxLayout="row" fxLayoutGap="16px" class="cloud-service-card">
+        <span fxFlex="50" fxLayoutAlign="center center">
+          <img src="../../../../../../assets/img/azure.png" height="60%" width="80%">
+        </span>
+        <span fxFlex="50" fxLayoutAlign="center center">
+            <span class="fs-32 primary">$ 3235</span>
+        </span>
+      </mat-card>
+    </div>
+  </div>
+</div> -->

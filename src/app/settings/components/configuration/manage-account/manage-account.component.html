@@ -1,0 +1,186 @@
+<div class="flyout">
+  <div *ngIf="!showStackCreationSteps" class="flyout-container" fxLayout="column" fxLayoutGap="20px">
+    <div>
+      <span class="heading-primary">New Cloud Account</span>
+    </div>
+    <form fxFlex="100%" [formGroup]="accountsForm" (ngSubmit)="!accountsForm.valid ? null : onAddAccount()"
+      fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="20px">
+      <div fxLayout="column" fxFlex="100%" fxLayoutGap="20px">
+
+        <mat-form-field>
+          <mat-select placeholder="Cloud Provider" formControlName="provider" required>
+            <mat-option *ngFor="let provider of providers" [value]="provider.value">
+              {{provider.name}}
+            </mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="accountsForm.controls['provider'].errors && accountsForm.controls['provider'].errors.required">
+            Cloud Provider is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Account/Alias Name" formControlName="accountName" required>
+          <mat-hint align="end">Need not to be your aws account name, Some name to recognise your account.</mat-hint>
+          <mat-error
+            *ngIf="accountsForm.controls['accountName'].errors && accountsForm.controls['accountName'].errors.required">
+            Account Name is <strong>required.</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="number" placeholder="AWS Account Number" formControlName="AccountId" required>
+          <mat-error
+            *ngIf="accountsForm.controls['AccountId'].errors && accountsForm.controls['AccountId'].errors.required">
+            Account Number is <strong>required.</strong>
+          </mat-error>
+          <mat-error
+            *ngIf="accountsForm.controls['AccountId'].errors && (accountsForm.controls['AccountId'].errors.min || accountsForm.controls['AccountId'].errors.max)">
+            Account number should be 12 digits.
+          </mat-error>
+          <mat-error *ngIf="accountsForm.controls['AccountId'].errors && accountsForm.controls['AccountId'].errors.isExisting"> Account number already exists. </mat-error>
+        </mat-form-field>
+        
+        <mat-hint align="start">AWS Permission Type*</mat-hint>
+        <mat-radio-group formControlName="accessType" required fxLayout="row wrap" fxLayoutGap="10px grid">
+          <mat-radio-button fxFlex value="optimization">Optimization Enabled Access</mat-radio-button>
+          <mat-radio-button fxFlex value="readonly">Read Only Access</mat-radio-button>
+        </mat-radio-group>
+       
+
+        <mat-form-field>
+          <mat-select placeholder="Select Group" formControlName="groups" multiple required>
+            <mat-option *ngFor="let group of groups" [value]="group._id">
+              {{group.groupName}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="accountsForm.controls['groups'].errors && accountsForm.controls['groups'].errors.required">
+            Group is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutGap="20px" dir="rtl">
+        <button mat-raised-button *ngIf="!isEdit" [copsButtonLoading]="isLoading" type="submit" class="mat-button-round"
+          color="primary" #eleRef [copsDisableByGroup]="true">Configure
+          Cloud Account</button>
+        <button mat-raised-button *ngIf="isEdit" [copsButtonLoading]="isLoading" type="submit" class="mat-button-round"
+          color="primary" #eleRef [copsDisableByGroup]="true">Save
+          Changes</button>
+        <button mat-button type="submit" class="mat-button-round" (click)="!isLoading ? onCloseStackCreation() : null"
+          color="">Cancel</button>
+      </div>
+    </form>
+  </div>
+  <div class="flyout-container" fxLayout="column" fxLayoutAlign="space-between none" *ngIf="showStackCreationSteps">
+    <div fxFlex="100%" fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <span class="heading-primary">Configure Cloud Account</span>
+        <div>
+          <mat-icon class="material-icons primary link" (click)="onCloseStackCreation()">close</mat-icon>
+        </div>
+      </div>
+      <div fxFlex="100%" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+        <span>
+          <!-- <i class="material-icons gray md-48">
+                cloud_upload
+                </i> -->
+          <img alt="Cloud Formation" width="80" height="100" class="megaops-logo"
+            src="../../../../../assets/img/cloud-formation.png">
+
+        </span>
+        <span class="fs-18 dark">
+          Download and run the <a *ngIf="optimizationTempalteUrl" class="dark custom-link"
+            [href]="optimizationTempalteUrl" download="CopsIntegrationTemplate.json">Cops
+            Integration cloud formation template</a> on your AWS Account.
+        </span>
+        <span class="fs-16 gray">
+          If you need help, follow the Integration Steps from below link.
+        </span>
+        <button mat-button>Integration Steps</button>
+        <span class="fs-16 gray">
+          Still having Issues? Contact the Cloud COpS team at <b>contact@megaops.io</b>
+        </span>
+      </div>
+    </div>
+    <div>
+      <div fxLayout="row" fxLayoutGap="20px" dir="rtl">
+        <button mat-raised-button [copsButtonLoading]="isLoading"
+          mdePopoverTriggerOn="click" [copsButtonLoading]="isLoading" [mdePopoverTriggerFor]="confirmIntegrationPopover"
+           type="submit" class="mat-button-round" color="primary"
+           #eleRef [copsDisableByGroup]="true">Confirm Integration</button>
+        <button mat-button type="submit" class="mat-button-round" (click)="!isLoading ? onCloseStackCreation() : null"
+          color="">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<mde-popover #confirmIntegrationPopover="mdePopover" [mdePopoverOverlapTrigger]="false">
+  <mat-card style="max-width: 300px">
+    <mat-card-content>
+      This means that you have completed the steps mentioned?
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-button color="warn" class="mat-button-round">Nope</button>
+      <button mat-button class="mat-button-round" mat-raised-button color="primary"
+        (click)="onConfigureAccount()">Yes</button>
+    </mat-card-actions>
+  </mat-card>
+</mde-popover>
+
+
+<!-- <a [href]="integrationTempalteUrl" download="CopsIntegrationTemplate.json">
+          
+        </a> -->
+<!-- <a mat-stroked-button [href]="integrationTempalteUrl" download="CopsIntegrationTemplate.json">
+          <mat-icon class="material-icons primary link">get_app</mat-icon><span
+            class="primary">Cops Integration Template</span>
+        </a> -->
+
+<!-- 
+<mat-horizontal-stepper>
+  <mat-step label="Step 1" state="phone">
+    <p>Download the template and <a
+        href="https://us-west-2.console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new"
+        target="_blank">Click here</a> to open AWS console and follow the Steps. </p>
+    <img src="assets\img\CreateStack\CreateStack-1.jpg" height="400" width="800" />
+    <p>After completion of step, proceed to next step</p>
+    <div dir="rtl">
+      <button mat-button matStepperNext class="mat-button-round" mat-raised-button color="primary">Next</button>
+    </div>
+  </mat-step>
+  <mat-step label="Step 2" state="chat">
+    <p>This will bring you to the next screen.</p>
+    <img src="assets\img\CreateStack\CreateStack-2.jpg" height="400" width="800" />
+    <p>After completion of step, proceed to next step</p>
+    <div dir="rtl" fxLayout="row" fxLayoutGap="20px">
+      <button mat-button matStepperNext class="mat-button-round" mat-raised-button color="primary">Next</button>
+      <button mat-button matStepperPrevious class="mat-button-round">Previous</button>
+    </div>
+  </mat-step>
+  <mat-step label="Step 3">
+    <p>This will bring you to the next screen.</p>
+    <img src="assets\img\CreateStack\CreateStack-3.jpg" height="400" width="800" />
+    <p>After completion of step, proceed to next step</p>
+    <div dir="rtl" fxLayout="row" fxLayoutGap="20px">
+      <button mat-button matStepperNext class="mat-button-round" mat-raised-button color="primary">Next</button>
+      <button mat-button matStepperPrevious class="mat-button-round">Previous</button>
+    </div>
+  </mat-step>
+  <mat-step label="Finish">
+    <p>This will bring you to the final step.</p>
+    <img src="assets\img\CreateStack\CreateStack-4.jpg" height="400" width="800" />
+    <p>After completion of step and creation of stack, please click Confirm (on bottom of the screen) stating the
+      stack is created.</p>
+    <div dir="rtl" fxLayout="row" fxLayoutGap="20px">
+      <button mat-button matStepperNext class="mat-button-round" mat-raised-button
+         color="primary" mdePopoverTriggerOn="click" [copsButtonLoading]="isLoading" [mdePopoverTriggerFor]="multiDeletePopover">Done</button>
+        <button mat-button matStepperPrevious class="mat-button-round">Previous</button>
+    </div>
+  </mat-step>
+  <ng-template matStepperIcon="phone">
+    <mat-icon>call_end</mat-icon>
+  </ng-template>
+  <ng-template matStepperIcon="chat">
+    <mat-icon>forum</mat-icon>
+  </ng-template>
+</mat-horizontal-stepper> -->

@@ -1,0 +1,119 @@
+<div class="visualization-container" fxLayout="column" fxFill>
+  <!-- <button mat-stroked-button color="warn" class="close-visualization" aria-label="Example icon-button with a heart icon">
+        <mat-icon color="warn">close</mat-icon>
+      </button> -->
+  <i class="material-icons md-36 warn close-visualization link" (click)="onCloseVisualization()">cancel_presentation</i>
+  <cops-d3-region-map [style.opacity]="selectedRegion ? 0.05 : 1" [regions]="data.regions" fxFlex="100"
+    (regionSelected)="onRegionSelected($event)"></cops-d3-region-map>
+  <ng-container *ngIf="selectedRegion">
+    <div class="visualization-container-overlay" fxLayout="row">
+      <div class="visualization-container-overlay-left" fxFlex="80">
+        <img class="vpc-icon" src="../../../../../assets/svg/aws/aws-cloud.svg">
+        <!-- <ng-container [style.visibility]="visualizationData && !selectedVpc ? hidden : none"> -->
+        <!-- <ng-container *ngIf="visualizationData && !selectedVpc"> -->
+        <!-- <ng-container *ngIf="visualizationData && !selectedVpc"> -->
+          <div fxFlex="100%" *ngIf="visualizationData && !selectedVpc" #d3GroupClusteringContainer class="full-height full-width">
+              <cops-d3-group-clustering fxFlex="100%" class="full-height full-width" [regionData]="visualizationData"
+              (vpcSelect)="onVpcSelect($event)"></cops-d3-group-clustering>
+          </div>
+          <ng-container *ngIf="!visualizationData">
+            <span class="animate fs-24">Visualizing...</span>
+          </ng-container>
+        <!-- </ng-container> -->
+        <!-- <ng-container > -->
+            <div fxFlex="100%"  *ngIf="visualizationData && selectedVpc" #d3GroupedForcedDirectedContainer class="full-height full-width">
+                <cops-d3-grouped-force-directed fxFill style="padding: 30px 10px 10px 10px; width: inherit;" fxFlex="100%" class="full-height  full-width"
+                (resourceSelect)="onResourceSelect($event)" (onStabilize)="onGroupForceStabilize($event)" [vpcData]="vpcDataFiltered"></cops-d3-grouped-force-directed>
+            </div>
+
+        <!-- </ng-container> -->
+      </div>
+      <div fxFlex="20" class="visualization-container-overlay-info light" fxLayout="column">
+        <div fxFlex="20" *ngIf="keyValuePairs && visualizationData && selectedVpc" class="cops-dark-theme" fxLayout="column" fxLayoutAlign="start end">
+          <br>
+          <br>
+          <mat-slide-toggle [(ngModel)]="applicationView" (toggleChange)="onApplicationView($event)"><b><i>Application
+                View</i></b>
+          </mat-slide-toggle>
+          <ng-container *ngIf="applicationView">
+            <form class="example-form">
+              <mat-form-field color="accent">
+                <input type="text" placeholder="Key" aria-label="Assignee" matInput [formControl]="keyControl"
+                  [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
+                  (optionSelected)="onKeySelect($event.option.value)">
+                  <mat-option *ngFor="let key of filteredTagKeys | async" [value]="key">
+                    {{key}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </form>
+            <form class="example-form" *ngIf="tagValues">
+              <mat-form-field color="accent">
+                <input type="text" placeholder="Value" aria-label="Number" matInput [formControl]="valueControl"
+                  [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onValueSelect($event.option.value)">
+                  <mat-option *ngFor="let value of filteredTagValues | async" [value]="value">
+                    {{value}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </form>
+          </ng-container>
+        </div>
+        <div fxFlex="80" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="center end">
+          <span *ngIf="selectedRegion" class="aws-color fs-24 bolder" fxLayout="row" fxLayoutAlign="center center">
+            <i *ngIf="selectedRegion && !selectedVpc" class="material-icons md-18 bolder aws-color link"
+              (click)="onAllRegions()"> arrow_back_ios</i>
+            <span>{{selectedRegion}}</span>
+          </span>
+          <ng-container *ngIf="visualizationData && !selectedVpc">
+            <span *ngFor="let data of visualizationData" class="light-gray fs-18 bold"
+              [ngStyle]="{'color':data.color}">{{data.VpcId}}</span>
+          </ng-container>
+          <ng-container *ngIf="visualizationData && (selectedVpc || selectedResource)">
+            <span *ngIf="selectedVpc" fxLayout="row" fxLayoutAlign="center center" class="fs-20 bold vpc-color">
+              <i *ngIf="selectedVpc && groupedForcedStabilized" class="material-icons md-16 vpc-color link" (click)="onAllVpcs()">
+                arrow_back_ios</i>
+              <span>{{selectedVpc.VpcId}}</span>
+            </span>
+            <br>
+            <span *ngIf="selectedSubnets" fxLayout="column" fxLayoutAlign="center center" class="fs-20 bold success"
+              fxLayoutGap="5px">
+              <span *ngFor="let subnet of selectedSubnets">{{subnet}}</span>
+            </span>
+            <br>
+            <ng-container *ngFor="let data of selectedResource | keyValue">
+              <ng-container *ngIf="displayKeys[selectedResource.type].indexOf(data.key) > -1">
+                <span class="bolder light-gray italic beige">{{data.key}}</span>
+                <!-- <span>{{selectedVpc[data.key]}}</span> -->
+                <ng-container [ngSwitch]="data.type">
+                  <span *ngSwitchCase="'undefined'" class="light-gray">-</span>
+                  <span *ngSwitchCase="'string'" class="light-gray">
+                    {{selectedResource[data.key]}}
+                  </span>
+                  <span *ngSwitchCase="'array'" class="light-gray">{{selectedResource[data.key].length}}</span>
+                  <span *ngSwitchDefault>{{selectedResource[data.key]}}</span>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+</div>
+
+
+<!-- <ng-container [ngSwitch]="keyValue.type">
+              <span *ngSwitchCase="'undefined'">-</span>
+              <span *ngSwitchCase="'string'">
+                {{selectedVpc[data.key]}}
+              </span>
+              <span *ngSwitchCase="'array'">{{selectedVpc[data.key].length}}</span>
+              <span *ngSwitchDefault>{{selectedVpc.[data.key]}}</span>
+        </ng-container> -->
+
+
+<!-- <span class="light-gray fs-18 italic bold" fxFlex="5"><i>Selecte Region to Visualise Data</i></span> -->

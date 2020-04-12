@@ -1,0 +1,107 @@
+// :ng-deep {
+
+//   .links line {
+//     stroke: #999;
+//     stroke-opacity: 0.6;
+//   }
+
+//   line {
+//     stroke: #999;
+//     stroke-opacity: 0.6;
+//   }
+
+//   .nodes circle {
+//     stroke: #fff;
+//     stroke-width: 1.5px;
+//   }
+
+//   path {
+//     fill-opacity: .1;
+//     stroke-opacity: 1;
+//   }
+
+//   .node {
+//     stroke: #fff;
+//     stroke-width: 1.5px;
+//   }
+
+//   .nodes {
+//     stroke: #fff;
+//     stroke-width: 1.5px;
+//   }
+// }
+
+// .links line {
+//   stroke: #999;
+//   stroke-opacity: 0.6;
+// }
+
+// line {
+//   stroke: #999;
+//   stroke-opacity: 0.6;
+// }
+.d3GroupedForcedDirected {
+  // border: 2px solid #F1853B;
+  border: 2px solid #2E73B8;
+  border-radius: 12px;
+}
+
+.d3GroupedForcedDirectedLegend {
+  position: absolute;
+  bottom: 45px;
+  left: 45px;
+
+
+  .label-img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .app-text {
+    // color: white;
+    // color: #ED4B89;
+    font-size: 13px;
+    font-weight: 900;
+  }
+
+  .hide-node {
+    text-decoration: line-through;
+  }
+
+}
+
+.d3GroupedForcedDirectedLinksLegend {
+  position: absolute;
+  bottom: 45px;
+  right: 25%;
+
+  .link-label {
+    width: 30px;
+    border: 1px solid #999;
+    opacity: 0.5;
+  }
+
+  .link {}
+
+  .association {
+    border-style: dashed;
+  }
+
+  .app-text {
+    font-size: 13px;
+    font-weight: 900;
+  }
+
+  .hide-link {
+    text-decoration: line-through;
+  }
+
+}
+
+.vpc-icon {
+  position: absolute;
+  top: 23px;
+  height: 50px;
+  width: 50px;
+  left: 75px;
+}

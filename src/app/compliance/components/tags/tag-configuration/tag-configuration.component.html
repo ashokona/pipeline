@@ -1,0 +1,43 @@
+<div class="content-margin">
+  <mat-accordion>
+    <mat-expansion-panel [expanded]=false hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <span class="heading-secondary">Recommended Tags</span>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-list role="list">
+        <mat-list-item role="listitem" *ngFor="let tag of recommendedTagData">
+          {{ getTagDetails(tag) }}
+        </mat-list-item>
+        <mat-list-item role="listitem">
+          <button mat-raised-button class="mat-button-round" color="primary" (click)="addRecommendedTags()"
+            #eleRef [copsDisableByGroup]="true">Apply Tags</button>
+        </mat-list-item>
+      </mat-list>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+<div fxLayout="column" fxLayoutGap="40px">
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <span class="heading-secondary">Tags Config</span>
+    <div fxLayout="row" fxLayoutGap="20px">
+      <button mat-raised-button class="mat-button-round" color="primary" (click)="onNewTag()"
+      #eleRef [copsDisableByGroup]="true">Add New Tag</button>
+    </div>
+  </div>
+  <!-- <div *ngIf="!isLoading; else loadingState"> -->
+    <cops-data-table (refreshClicked)="onRefreshTags($event)" (deleteClicked)="onDeleteTag($event)"
+      (editClicked)="onEditTag($event)" [options]="tableOptions" [data]="tagData" [columns]="displayedColumns">
+    </cops-data-table>
+  <!-- </div> -->
+</div>
+
+<!-- <ng-template #loadingState>
+  <div class="full-height" fxLayout="column" fxLayoutAlign="center center">
+    <mat-spinner [diameter]="50"></mat-spinner>
+  </div>
+</ng-template> -->
+
+<cops-manage-tag [tag]="tag" [resourceType]="resourceType" (cancelClicked)="onCancelTag($event)" *ngIf="manageTag">
+</cops-manage-tag>

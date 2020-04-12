@@ -1,0 +1,19 @@
+<div fxLayout="column" fxLayoutGap="20px">
+  <div fxLayout="row" fxLayoutAlign="space-between center" >
+    <span class="heading-primary">Groups</span>
+    <div fxLayout="row" fxLayoutGap="20px" IngIf="groups">
+      <button mat-raised-button class="mat-button-round" color="primary" (click)="onAddNewGroup()"
+      #eleRef [copsDisableByGroup]="true">Create New Group</button>
+    </div>
+  </div>
+  <div>
+    <cops-data-table
+      (refreshClicked)="onRefreshGroups($event)"
+      (deleteClicked)="onDeleteAccount($event)"
+      (editClicked)="onEditAccount($event)"
+      [options]="tableOptions" [data]="tableData" [columns]="displayedColumns">
+    </cops-data-table>
+  </div>
+</div>
+
+<cops-add-group [groups]="groups" [user]="group" (cancelClicked)="onCancelAccount($event)" (updateTable)="updateTable($event)" *ngIf="editOrAddGroup"></cops-add-group>

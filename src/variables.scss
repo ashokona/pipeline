@@ -1,0 +1,59 @@
+@import './theme/custom-colors.scss';
+@import '~@angular/material/theming';
+
+$primary : mat-palette($cops-blue,900);
+$primary-light : mat-palette($cops-blue,300);
+$accent : mat-palette($mat-amber, A200, A100, A400);
+$warn : mat-palette($mat-red,500);
+$success : mat-palette($mat-green,500);
+$alert : mat-palette($mat-amber,800);
+$info : mat-palette($mat-yellow,500);
+
+// cops color variants
+$cops-primary : mat-color($primary);;
+$cops-primary-light : mat-color($primary-light);
+$cops-accent : mat-color($accent);
+$cops-warn : mat-color($warn);
+$cops-success : mat-color($success);
+$cops-alert : mat-color($alert);
+$cops-info : mat-color($info);
+$cops-dark : #263238;
+$cops-gray : #9E9E9E;
+$cops-light-gray : #B0BEC5;
+$cops-light : #FFFFFF;
+$cops-dull: #EFF1F4;
+$cops-primary-dull: #266A81;
+
+//cops module colors
+$cops-cost-primary: #004D40;
+$cops-cost-secondary: #81B5A1;
+
+$cops-security-primary: #FF5722;
+$cops-security-secondary: #FF9800;
+
+$cops-inventory-primary: #607D8B;
+$cops-inventory-secondary: #9E9E9E;
+
+$cops-compliance-primary: #3366CC;
+$cops-compliance-secondary: #29B6F6;
+
+// cops border styles
+$border-radius: 4px;
+
+// widths & heights
+$full-width: 100%;
+$full-height: 100%;
+
+// paddings & margins
+$content-padding-xs: 5px;
+$content-padding-small: 10px;
+$content-padding: 20px;
+$content-padding-large: 30px;
+
+$content-margin-small: 10px;
+$content-margin: 20px;
+$content-margin-large: 30px;
+
+// navbar heights
+$primary-nav-height: 56px;
+$secondary-nav-height: 48px;

@@ -1,0 +1,198 @@
+<!-- <mat-card class="mat-table-card" *ngIf="dataSource.data && dataSource.data.length > 0; else emptyState"> -->
+<mat-card class="mat-table-card">
+  <mat-card-title fxLayout="row"
+    *ngIf="tableOptions.isDisplaytitle || tableOptions.isCreateRow || tableOptions.isRefresh ">
+    <div fxFlex="25" fxFill>
+      <mat-form-field *ngIf="tableOptions.isSearchFilter" class="side-padding-15 full-width" appearance=""
+        color="primary">
+
+        <input matInput placeholder="Search from the list" (keyup)="applyFilter($event.target.value)" #input>
+      </mat-form-field>
+    </div>
+    <div fxFlex fxLayoutAlign="end center">
+      <span class="example-spacer"></span>
+      <button *ngIf="tableOptions.isDownload && !isLoading" mat-icon-button color="" (click)="onDownloadData()">
+        <i class="material-icons md-18 bold">get_app</i>
+      </button>
+      <ng-container *copsAuthoriser>
+        <button *ngIf="tableOptions.isCreateRow" mat-icon-button color="primary"
+          (click)="onUpdateOrCreate('undefined')">
+          <i class="material-icons md-18 bold">add</i>
+        </button>
+      </ng-container>
+      <button *ngIf="tableOptions.isRefresh" mat-icon-button color="primary" (click)="onRefreshData()">
+        <i class="material-icons md-18 bold">refresh</i>
+      </button>
+      <ng-container *copsAuthoriser>
+        <button mat-icon-button [mdePopoverTriggerFor]="multiDeletePopover"
+          *ngIf="tableOptions.isDeletable && (selection.selected.length > 1)" mdePopoverTriggerOn="click" color="warn">
+          <span>({{selection.selected.length}}) </span>
+          <i class="material-icons md-18 bold" aria-label="" matTooltip="Delete Selected">delete_sweep</i>
+        </button>
+      </ng-container>
+    </div>
+  </mat-card-title>
+  <mat-card-content>
+    <div [ngClass]="tableOptions.tableStyle" *ngIf="!isLoading">
+      <ng-container [ngTemplateOutlet]="dataSource.data && dataSource.data.length > 0 ? table : emptyState"
+        [ngTemplateOutletContext]="{link:dataSource}">
+      </ng-container>
+      <ng-template #table let-link='link'>
+        <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort>
+
+          <ng-container *ngFor="let column of displayedColumns">
+            <ng-container *ngIf="column !== 'select' && column !== 'actions'" [matColumnDef]="column">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columnsData[column].displayName}} </th>
+              <td mat-cell *matCellDef="let row">
+                <span class="mobile-label">{{columnsData[column].displayName}} :</span>
+                <span class="mobile-row">
+                  <span *ngIf="!columnsData[column].type">{{row[column]}}</span>
+                  <span
+                    *ngIf="columnsData[column].type && columnsData[column].type === 'date'">{{ row[column] | date}}</span>
+                  <span fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center"
+                    *ngIf="columnsData[column].type && columnsData[column].type === 'boolean'">
+                    <mat-chip-list>
+                      <mat-chip class="chip-success link" *ngIf="row[column] === true">
+                        <i class="material-icons md-18 link success margin-right-5"> check_circle_outline </i>
+                        {{ columnsData[column].ifTrue}}
+                      </mat-chip>
+                      <ng-container *ngIf="row[column] === false">
+                        <mat-chip *ngIf="columnsData[column].actionable && columnsData[column].actionOn === row[column]"
+                          (click)="onColumnActionClicked(row)" class="chip-warn link">
+                          <i class="material-icons md-18 link warn margin-right-5"> {{columnsData[column].actionIcon}}
+                          </i>
+                          {{ columnsData[column].ifFalse}}
+                        </mat-chip>
+                      </ng-container>
+
+                    </mat-chip-list>
+
+                  </span>
+                  <!-- <cops-data-table-row [rowData]="row[column]"></cops-data-table-row> -->
+                </span>
+              </td>
+            </ng-container>
+          </ng-container>
+          <ng-container *ngIf="tableOptions.isSelectable">
+            <ng-container matColumnDef="select">
+              <th mat-header-cell *matHeaderCellDef>
+                <mat-checkbox (change)="$event ? masterToggle() : null" color="primary"
+                  [checked]="selection.hasValue() && isAllSelected()"
+                  [indeterminate]="selection.hasValue() && !isAllSelected()">
+                </mat-checkbox>
+              </th>
+              <td mat-cell *matCellDef="let row">
+                <mat-checkbox #eleRef [copsDisableByGroup]="true" (click)="$event.stopPropagation()" color="primary"
+                  (change)="$event ? onSelectRow(row) : null" [checked]="selection.isSelected(row)">
+                </mat-checkbox>
+              </td>
+            </ng-container>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let row">
+              <div fxLayoutAlign="end center">
+                <ng-container *copsAuthoriser>
+                  <!-- dont delete -->
+                  <!-- <button mat-icon-button (click)="onCustomRow(row)"
+                    *ngIf="tableOptions.isCustom && (tableOptions.customDependsOn && !row[tableOptions.customDependsOn])"> -->
+                  <button mat-icon-button (click)="onCustomRow(row)" *ngIf="tableOptions.isCustom">
+                    <i class="material-icons md-18 bold primary" aria-label=""
+                      [matTooltip]="tableOptions.customLabel">{{tableOptions.customIcon}}</i>
+                  </button>
+                </ng-container>
+                <ng-container *copsAuthoriser>
+                  <button #eleRef [copsDisableByGroup]="true" mat-icon-button (click)="onEditRow(row)"
+                    *ngIf="tableOptions.isEditable">
+                    <i class="material-icons md-18" matTooltip="Edit">edit</i>
+                  </button>
+                </ng-container>
+                <ng-container *copsAuthoriser>
+                  <button #eleRef [copsDisableByGroup]="true" mat-icon-button *ngIf="tableOptions.isDeletable"
+                    [mdePopoverTriggerFor]="singleDeletePopover" mdePopoverTriggerOn="click" color="warn"
+                    (click)="deleteRow = row">
+                    <i class="material-icons md-18 bold" aria-label="" matTooltip="Delete Row">delete_outline</i>
+                  </button>
+                </ng-container>
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- any action on the table row -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <!-- <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection ? onSelectRow(row) : null">
+        </tr> -->
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <!-- <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="view-detail-row"></tr> -->
+          <!-- <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="view-detail-row"></tr> -->
+
+        </table>
+
+      </ng-template>
+      <ng-template #emptyState>
+        <div *copsContentState="'nodata'">
+        </div>
+      </ng-template>
+
+      <!-- pagination on table -->
+      <!-- <mat-paginator [pageSizeOptions]="[10,20,30]" #paginator [length]="resultsLength" [pageIndex]="pageIndex"
+      [pageSize]="pageSize"></mat-paginator> -->
+    </div>
+    <div [ngClass]="tableOptions.tableStyle" class="loading-table" *ngIf="isLoading">
+      <table>
+        <tr>
+          <ng-container *ngFor="let column of displayedColumns">
+            <ng-container *ngIf="column !== 'select' && column !== 'actions'">
+              <th> {{columnsData[column].displayName}} </th>
+              <!-- <td mat-cell *matCellDef="let row">{{row}}kkk</td>
+              <span>tetststs</span> -->
+            </ng-container>
+          </ng-container>
+        </tr>
+        <ng-container *ngFor="let i of [1,2,3]">
+          <tr>
+            <ng-container *ngFor="let column of displayedColumns">
+              <ng-container *ngIf="column !== 'select' && column !== 'actions'">
+                <td>
+                  <div class="block-loader-table block-loader-animation"></div>
+                </td>
+              </ng-container>
+            </ng-container>
+          </tr>
+          <!-- <td mat-cell *matCellDef="let row">{{row}}kkk</td>
+            <span>tetststs</span> -->
+        </ng-container>
+
+      </table>
+    </div>
+    <mat-paginator *ngIf="tableOptions.isPagination" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+
+  </mat-card-content>
+</mat-card>
+
+<mde-popover #singleDeletePopover="mdePopover" [mdePopoverOverlapTrigger]="false">
+  <mat-card style="max-width: 300px">
+    <mat-card-content>
+      Are you sure want to delete the item
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-button color="warn" class="mat-button-round">Cancel</button>
+      <button mat-button class="mat-button-round" mat-raised-button (click)="onDeleteRow(deleteRow)"
+        color="primary">Yes</button>
+    </mat-card-actions>
+  </mat-card>
+</mde-popover>
+
+<mde-popover #multiDeletePopover="mdePopover" [mdePopoverOverlapTrigger]="false">
+  <mat-card style="max-width: 300px">
+    <mat-card-content>
+      Are you sure want to delete the Selected items?
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-button color="warn" class="mat-button-round">Cancel</button>
+      <button mat-button class="mat-button-round" mat-raised-button (click)="onDeleteMulti()"
+        color="primary">Yes</button>
+    </mat-card-actions>
+  </mat-card>
+</mde-popover>

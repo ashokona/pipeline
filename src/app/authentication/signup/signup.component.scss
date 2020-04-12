@@ -1,0 +1,42 @@
+@import '../../../variables.scss';
+
+.signup-card {
+  width: 400px;
+  padding:0px;
+  padding-top: $content-padding;
+  .megaops-logo {
+    height: 26px;
+    width:30px;
+    margin: 0 4px 3px 0;
+    vertical-align: middle;
+  }
+  .login-header-image {
+    background-image: url('../../../assets/img/logo.png');
+    background-size: cover;
+  }
+  .mat-card-content {
+    padding: $content-padding;
+    margin-bottom: 0px;
+  }
+
+  .sign-up-button {
+    line-height: 40px;
+  }
+
+  .signin-link {
+    margin-top: 5px;
+    a {
+      text-decoration: none;
+      border-bottom: 1px solid $cops-dark;
+      cursor: pointer;
+    }
+  }
+
+  .signup-card-actions {
+    padding: 0 $content-padding $content-padding $content-padding;
+  }
+}
+
+:host::ng-deep .mat-card-header-text {
+  margin: 0px; 
+}

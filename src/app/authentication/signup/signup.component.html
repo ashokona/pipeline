@@ -1,0 +1,53 @@
+<mat-card *ngIf="!notiType" class="signup-card" fxLayoutGap="20px">
+  <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+    <img alt="Mega Ops" class="megaops-logo" src="../../../assets/img/logo.png">
+    <span class="fs-18">Sign Up to Cloud COpS</span>
+    <!-- <p>to access COPS</p> -->
+  </div>
+  <!-- <form class="login-form" [formGroup]="signUpForm" (keyup.enter)="(!signUpForm.valid || signUpContent !== 'SignUp') ? null : onSignUp()" (ngSubmit)="(!signUpForm.valid || signUpContent !== 'SignUp') ? null : onSignUp()"> -->
+  <form class="login-form" [formGroup]="signUpForm" (ngSubmit)="(!signUpForm.valid || isSignupLoading) ? null : onSignUp()">
+    <mat-card-content>
+      <mat-form-field class="full-width" color="primary">
+        <input matInput type="text" placeholder="Company/Individual Name" formControlName="companyName" required>
+        <mat-error
+          *ngIf="signUpForm.controls['companyName'].errors && signUpForm.controls['companyName'].errors.required">
+          Company Name is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width" color="primary">
+        <input matInput type="email" placeholder="Email" formControlName="email" required>
+        <mat-error *ngIf="signUpForm.controls['email'].errors && signUpForm.controls['email'].errors.email">
+          Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="signUpForm.controls['email'].errors && signUpForm.controls['email'].errors.required">
+          Email is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width" color="primary">
+        <input matInput [type]="showPassword ? 'text' : 'password'" placeholder="Password" formControlName="password"
+          required>
+        <mat-icon class="link" matSuffix (click)="showPassword = !showPassword">
+          {{showPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        <mat-error *ngIf="signUpForm.controls['password'].errors && signUpForm.controls['password'].errors.required">
+          Password is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="signUpForm.controls['password'].errors && signUpForm.controls['password'].errors.minlength">
+          Password must be at least 6 characters
+        </mat-error>
+      </mat-form-field>
+      <!-- <mat-form-field class="full-width" color="primary">
+        <input matInput type="Number" placeholder="Mobile" formControlName="mobile">
+      </mat-form-field> -->
+    </mat-card-content>
+    <div fxLayout="column" class="signup-card-actions" fxLayoutAlign="space-between stretch">
+      <button mat-raised-button color="primary" type="submit" class="sign-up-button" type="submit" [copsButtonLoading]="isSignupLoading">Sign Up</button>
+      <span class="fs-14 gray signin-link">Already have an account
+          <a color="primary" class="fs-14 dark" [routerLink]="!isSignupLoading ? '/auth/signin' : null">Sign In</a>
+        </span>
+    </div>
+  </form>
+</mat-card>
+<ng-container *ngIf="notiType">
+  <cops-full-page-notification [loading]="isSignupLoading" [icon]="notiIcon" [type]="notiType"
+  [title]="notiTitle" [description]="notiDescription" [action]="notiAction" (actionClicked)="onActionClicked($event)"></cops-full-page-notification>
+</ng-container>

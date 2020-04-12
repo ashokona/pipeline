@@ -1,0 +1,39 @@
+@import '../../../variables.scss';
+
+.mat-list-item {
+  color: $cops-dull;
+  .child-item{
+    padding: 0 12px;
+  }
+}
+
+.menu-item-name {
+  margin: 0 15px;
+  font-size: 15px;
+}
+
+.parent-menu-item-name{
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size:16px;
+}
+
+
+:host ::ng-deep .mat-list-item {
+  height: 48px;
+  width:auto;
+}
+
+:host ::ng-deep .mat-list-item-content {
+  padding: 0 10px !important;
+}
+
+.mat-list-item.active {
+  color:$cops-light;
+  border-left: 2px solid $cops-light;
+}
+
+.mat-list-item:hover {
+  color:$cops-light;
+  border-left: 2px solid $cops-light;
+}

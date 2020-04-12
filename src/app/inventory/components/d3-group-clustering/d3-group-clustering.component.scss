@@ -1,0 +1,58 @@
+// .selected {
+//     fill: none;
+//   }
+  
+//   .button {
+//     min-width: 130px;
+//     padding: 4px 5px;
+//     cursor: pointer;
+//     text-align: center;
+//     font-size: 13px;
+//     border: 1px solid #e0e0e0;
+//     text-decoration: none;
+//   }
+
+//   .button.active {
+//     background: #000;
+//     color: #fff;
+//   }
+:host {
+  display: block; /* or display: inline-block; */
+}
+  .d3GroupClusteringLegend {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+
+
+    .label-img {
+      width: 24px;
+      height: 24px;
+    }
+
+    .app-text {
+      // color: white;
+      // color: #ED4B89;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+  }
+
+.d3GroupClustering {
+
+      // border: 2px solid #F1853B;
+        // padding: 30px 10px 10px 10px;
+        // border-radius: 12px;
+}
+.vpc-icon {
+  position: absolute;
+  top: -9px;
+  left: 42px;
+  height: 50px;
+  width: 50px;
+}
+
+.d3GroupClusteringEmptyState {
+  color: #f1853b;
+}

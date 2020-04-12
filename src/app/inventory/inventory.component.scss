@@ -1,0 +1,10 @@
+@import '../../variables';
+
+.inventory-container {
+  height: calc(100% - 104px);
+  padding: $content-padding;
+}
+
+.visualization-dialog-container .mat-dialog-container {
+  background: red;
+}

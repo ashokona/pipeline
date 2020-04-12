@@ -1,0 +1,9 @@
+<mat-tab-group [selectedIndex]="selectedIndex"
+ (selectedTabChange)="onTabChanged($event)">
+    <mat-tab *ngFor="let tab of tabs">
+      <ng-template mat-tab-label>
+        <span class="heading-primary-noborder">{{tab.label}}</span>
+        <!-- <span *ngIf="tab.value" >{{tab.value}}</span> -->
+      </ng-template>
+    </mat-tab>
+</mat-tab-group>

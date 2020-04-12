@@ -1,0 +1,11 @@
+<cops-secondary-nav [navItems]="complianceTabs" [title]="title" (navItemChanged)="onNavItemChanged($event)">
+</cops-secondary-nav>
+<div class="container" fxLayout="column" fxLayoutGap="20px">
+  <!-- <span fxFlex> -->
+  <!-- <cops-row-card-item [data]="rowCardItemData"></cops-row-card-item> -->
+  <!-- <cops-tabs [tabs]='tabList' [styleClass]="" [selectedTab]="selectedTabIndex" (selected)='onSelectTab($event)'></cops-tabs> -->
+  <!-- </span> -->
+  <span copsRestrictedAccess fxFlex>
+    <router-outlet></router-outlet>
+  </span>
+</div>

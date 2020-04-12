@@ -1,0 +1,22 @@
+@import '../../../../variables.scss';
+
+.secondary-nav-item {
+  margin-left: 6px;
+  text-transform: uppercase;
+}
+
+.mat-card {
+  // height: 60px;
+  margin: 0;
+
+  .mat-card-content {
+    margin: 0;
+  }
+}
+
+.bdr-right {
+  border-right: 1px solid $cops-dull;
+}
+.bdr-bottom{
+  border-bottom: 1px solid $cops-dull;
+}

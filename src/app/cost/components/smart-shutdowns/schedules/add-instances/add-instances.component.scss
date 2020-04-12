@@ -1,0 +1,18 @@
+@import '../../../../../../variables';
+
+.mat-dialog-container{
+  padding: 0px;
+  overflow: hidden;
+  .add-instances-container {
+    height: 100%;
+  }
+  .dialog-header {
+    padding: $content-padding;
+  }
+  .dialog-footer {
+    padding: $content-padding;
+  }
+  .dialog-content {
+    overflow: scroll;
+  }
+}

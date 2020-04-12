@@ -1,0 +1,22 @@
+<div fxLayout="column" fxLayoutGap="20px">
+    <div fxLayout="row" >
+        <span fxFlex>
+          <span class="heading-primary">EXCLUSIONS</span>
+          <!-- <p>Exclusions are filters on compliance findings. You can filter excluded findings on the Results or Alerts pages.
+            In addition, excluded findings are not included in the score calculations for ruleset in the Compliance dashboard.
+            Exclusions are applied from the next time the assessment is run.</p> -->
+        </span>
+        <span fxFlex fxLayoutAlign="end center">
+            <button mat-raised-button class="mat-button-round" color="primary" (click)="saveExclusions()"
+            [copsDisableByGroup]="true">Save</button>
+        </span>
+    </div>
+    <div>
+        <cops-data-table 
+          *copsLoading="isRisksLoading"
+          (refreshClicked)="onRefreshData()"
+          (selectClicked)="onSelection($event)"
+          [options]="tableOptions" [data]="tableData" [columns]="displayedRiskColumns">
+        </cops-data-table>
+    </div>
+</div>

@@ -1,0 +1,58 @@
+@import '../../../../variables.scss';
+
+.list-item {
+    // margin: 20px 0;
+    margin-bottom: 20px;
+
+    .legend {
+        padding: 10px 0;
+    }
+}
+
+.show-on-hover {
+    i {
+        visibility: hidden;
+    }
+
+    &:hover {
+        i {
+            visibility: visible;
+        }
+    }
+}
+
+.empty-state {
+    height: 100%
+}
+
+.list-header {
+    background: $cops-primary-light;
+    color: $cops-primary
+}
+
+mat-expansion-panel {
+    mat-expansion-panel-header {
+        height: auto !important;
+        min-height: 48px;
+    }  
+}
+:host::ng-deep .mat-expansion-indicator::after {
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.high {
+    color: $cops-warn;
+}
+.medium {
+    color: $cops-alert;
+}
+.low {
+    color: $cops-info;
+}
+.secure {
+    color: $cops-success;
+}
+.hidden {
+    display: none;
+}

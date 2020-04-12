@@ -1,0 +1,30 @@
+@import '../../variables.scss';
+
+.mat-sidenav-container {
+  top: 56px !important;
+  height: -webkit-calc(100% - 56px);
+  height: -moz-calc(100% - 56px);
+  height: calc(100% - 56px);
+  background: $cops-dull;
+  .sidenav.mat-drawer.mat-drawer-side {
+    border-right: none;
+  }
+
+  .mat-drawer:not(.mat-drawer-side){
+    box-shadow: none;
+  }
+
+  .sidenav {
+    background-color: $cops-dark;
+    // background-image: url('../../assets/img/nav-back.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    user-select: none;
+  }
+
+  .sidenav-content {
+    background-color: $cops-dull;
+    height: 100%;
+    margin-left:48px;
+  }
+}

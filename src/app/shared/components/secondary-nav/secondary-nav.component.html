@@ -1,0 +1,25 @@
+<!-- <div class="cops-cost-theme"> -->
+  <mat-toolbar class="mat-elevation-z0 secondary-nav-bar" color="accent">
+    <mat-toolbar-row>
+      <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
+        <span class="fs-18 bold"> {{title | uppercase }}</span>
+        <i class="material-icons link" (click)="onCustom()" *ngIf="custom">{{custom.icon}}</i>
+      </div>
+      <span class="top-nav-spacer"></span>
+      <span fxHide.sm fxHide.xs >
+        <ng-container *ngFor="let item of navItems">
+          <!-- <button mat-button (click)="onNavItem(item.route)" [color]="router.url.includes(item.route)? 'accent': primary">
+            <i class="material-icons md-18">
+              {{item.iconName}}
+            </i><span class="secondary-nav-item">{{item.displayName}}</span>
+          </button> -->
+          <a class="sec-nav-items" [ngClass]="{'active': item.route ? this.router.url.includes(item.route): false}" (click)="onNavItemChange(item.route)">
+            <!-- <i class="material-icons md-18"> {{item.iconName}}</i> -->
+            <span class="secondary-nav-item">{{item.displayName}}</span>
+          </a>
+        </ng-container>
+      </span>
+      <ng-content select="[secNavContent]"></ng-content>
+    </mat-toolbar-row>
+  </mat-toolbar>
+<!-- </div> -->

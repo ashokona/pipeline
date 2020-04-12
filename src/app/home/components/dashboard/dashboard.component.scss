@@ -1,0 +1,29 @@
+@import '../../../../variables.scss';
+
+#container{
+  background: $cops-dull;
+}
+
+@keyframes MoveUpDown {
+  0%, 100% {
+    bottom: 0;
+  }
+  50% {
+    bottom: 100px;
+  }
+}
+
+.download-indicator{
+  position: absolute;
+  bottom: 0;
+  left: 50px;
+  z-index: 10000;
+  animation: MoveUpDown 1s linear infinite;
+}
+
+.secondary-nav-bar.mat-toolbar-single-row {
+  height: $secondary-nav-height;
+  background: #266A81;
+  color: $cops-light;
+  padding: 0 $content-padding;
+}

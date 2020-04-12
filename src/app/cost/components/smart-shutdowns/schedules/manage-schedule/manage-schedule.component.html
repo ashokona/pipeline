@@ -1,0 +1,27 @@
+<mat-accordion class="manage-schedule-accordion">
+  <mat-expansion-panel [expanded]="manageScheduleStep === 0" (opened)="setManageScheduleStep(0)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <span *ngIf="!schedule">
+          Create Schedule
+        </span>
+        <span *ngIf="schedule">
+           <b>{{schedule.ScheduleName}}</b> Saves {{schedule.NoOfHours}}
+        </span>
+      </mat-panel-title>
+      <mat-panel-description>
+        <span></span>
+        <mat-icon *ngIf="!enableAddInstances">edit</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <cops-create-schedule [schedule]="schedule" (scheduleDone)="onScheduleDone($event)"></cops-create-schedule>
+  </mat-expansion-panel>
+  <mat-expansion-panel [expanded]="manageScheduleStep === 1" [disabled]="!schedule" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Add/Remove Instances to Schedule
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+      <cops-add-instances [schedule]="schedule" (addInstancesDone)="onAddInstancesDone($event)"></cops-add-instances>
+  </mat-expansion-panel>
+</mat-accordion>
