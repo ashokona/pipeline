@@ -20,16 +20,18 @@ pipeline {
     stage('Install Packages') {
       steps {
         //sh 'git --version'
-        echo 'brnach ...' + env.BRANCH_NAME
+        //echo 'brnach ...' + env.BRANCH_NAME
         // sh 'node -v'
         // sh 'npm -v'
         //sh 'npm install'
-        sh 'git --version'
-        if (env.BRANCH_NAME == 'master') {
-            echo 'I only execute on the master branch'
-        } else {
-            echo 'I execute elsewhere'
-        }
+        script {
+                    if (env.BRANCH_NAME == 'master') {
+                        echo 'I only execute on the master branch'
+                    } else {
+                        echo 'I execute elsewhere'
+                    }
+                }
+        //sh 'git --version'
       }
     }
     stage('Test and Build') {
