@@ -1,37 +1,23 @@
 pipeline {
-  agent
-  {
+  agent {
     docker {
       image 'tarampampam/node:13-alpine'
-      //args '-p 20001-20100:3000'
+      // args '-p 20001-20100:3000'
     }
   }
   environment {
-   CI = 'false'
+    CI = 'false'
+    HOME = '.'
     npm_config_cache = 'npm-cache'
- HOME = '.'
- //  npm_config_cache = 'npm-cache'
- }
-  //tools { 
-    //    git 'masterGit'
-  //}
+  }
   stages {
-    
     stage('Install Packages') {
       steps {
-        //sh 'git --version'
-        //echo 'brnach ...' + env.BRANCH_NAME
+        // // sh 'git --version'
         // sh 'node -v'
         // sh 'npm -v'
-        //sh 'npm install'
-        script {
-                    if (env.BRANCH_NAME == 'master') {
-                        echo 'I only execute on the master branch'
-                    } else {
-                        echo 'I execute elsewhere'
-                    }
-                }
-        //sh 'git --version'
+        echo 'brnach ...' + env.BRANCH_NAME
+        sh 'npm install'
       }
     }
     stage('Test and Build') {
@@ -43,7 +29,15 @@ pipeline {
         // }
         stage('Create Build Artifacts') {
           steps {
-            sh 'npm run build'
+            script {
+              if (env.BRANCH_NAME == 'master') {
+                  sh 'npm run build-prod'
+              }if (env.BRANCH_NAME == 'release') {
+                  sh 'npm run build-release'
+              }else {
+                  sh 'npm run build-dev'
+              }
+            }
           }
         }
       }
