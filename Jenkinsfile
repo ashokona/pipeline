@@ -32,7 +32,7 @@ pipeline {
             script {
               if (env.BRANCH_NAME == 'master') {
                   sh 'npm run build-prod'
-              }if (env.BRANCH_NAME == 'release') {
+              }else if (env.BRANCH_NAME == 'release') {
                   sh 'npm run build-release'
               }else {
                   sh 'npm run build-dev'
