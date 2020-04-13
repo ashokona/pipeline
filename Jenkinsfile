@@ -25,6 +25,11 @@ pipeline {
         // sh 'npm -v'
         //sh 'npm install'
         sh 'git --version'
+        f (env.BRANCH_NAME == 'master') {
+            echo 'I only execute on the master branch'
+        } else {
+            echo 'I execute elsewhere'
+        }
       }
     }
     stage('Test and Build') {
