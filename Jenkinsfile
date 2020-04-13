@@ -61,7 +61,7 @@ pipeline {
             branch 'master'
           }
           steps {
-            withAWS(region:'us-east-1',credentials:'<AWS-Production-Jenkins-Credential-ID>') {
+            withAWS(region:'us-east-1',credentials:'AWS-Production-Jenkins-Credential-ID') {
               s3Delete(bucket: 'cloudcops.io', path:'**/*')
               s3Upload(bucket: 'cloudcops.io', workingDir:'build', includePathPattern:'**/*');
             }
