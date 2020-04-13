@@ -1,11 +1,11 @@
 pipeline {
-  agent none
-  //{
-    //docker {
-      //image 'node:12-alpine'
+  agent
+  {
+    docker {
+      image 'tarampampam/node:13-alpine'
       //args '-p 20001-20100:3000'
-   // }
- // }
+    }
+  }
   environment {
    CI = 'false'
     npm_config_cache = 'npm-cache'
@@ -16,22 +16,6 @@ pipeline {
     //    git 'masterGit'
   //}
   stages {
-        stage('node') {
-            agent {
-                docker { image 'git' }
-            }
-            steps {
-                sh 'git --version'
-            }
-        }
-        stage('git') {
-            agent {
-                docker { image 'node:12-alpine' }
-            }
-            steps {
-                sh 'node --version'
-            }
-        }
     
     stage('Install Packages') {
       steps {
