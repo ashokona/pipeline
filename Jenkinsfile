@@ -19,10 +19,12 @@ pipeline {
     
     stage('Install Packages') {
       steps {
-        sh 'git --version'
+        //sh 'git --version'
+        echo 'brnach ...' + env.BRANCH_NAME
         // sh 'node -v'
         // sh 'npm -v'
-        sh 'npm install'
+        //sh 'npm install'
+        sh 'git --version'
       }
     }
     stage('Test and Build') {
