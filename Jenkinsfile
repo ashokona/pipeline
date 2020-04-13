@@ -18,7 +18,7 @@ pipeline {
   stages {
         stage('node') {
             agent {
-                docker { image 'alpine/git' }
+                docker { image 'git' }
             }
             steps {
                 sh 'git --version'
